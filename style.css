@@ -1,80 +1,127 @@
-* {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-		'Open Sans', 'Helvetica Neue', sans-serif;
-}
-:root {
-	--theme-color: #1a65db;
-	--header-height: 60px;
-	--nav-height: 75px;
-}
-header {
-	background-color: var(--theme-color);
-	color: white;
-	height: var(--header-height);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-main {
-	height: calc(100vh - var(--nav-height) - var(--header-height));
-	background-color: #ececec;
-	display: grid;
-	grid-template-columns: repeat(3, 100vw);
-	overflow-x: scroll;
-	scroll-snap-type: x mandatory;
-	scroll-behavior: smooth;
-}
-.screen {
-	height: 100%;
-	scroll-snap-align: center;
-}
-.box {
-	display: flex;
-	flex-wrap: wrap;
-	height: 40px;
-	align-content: space-between;
-}
-nav {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	border-top: 1px solid var(--theme-color);
-}
-/* GRID  */
-/* .tabs {
-	height: 75px;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	justify-items: center;
-	align-items: center;
-} */
+*{ /*Dit betekent dat dit betrekking heeft op alle elementen*/
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} /*System-ui geeft de font van het system dat word gebruikt (bijvoorbeeld mac en Ios)*/
 
-.tabs {
-	height: var(--nav-height);
-	display: flex;
-	align-items: center;
+
+:root{ /*Hierin kun je variabelen definiëren, dit kan handig zijn wanneer je meerdere elementen hebt met dezelfde kleur en deze tegelijk wilt kunnen veranderen*/
+    --theme-color: cadetblue; /*Nu heb je een variabele gemaakt genaamd --theme-color met de waarde cadetblue*/
+    --header-height: 70px;
+    --nav-height: 75px;
 }
-.tab {
-	display: block;
-	flex-grow: 1;
-	text-align: center;
-	text-decoration: none;
-	border-top: var(--theme-color);
-	opacity: 0.6;
-	/* align-self: center; */
+
+header{
+    padding-top: 5vh;
 }
-.tab.active {
-	opacity: 1;
+
+body{
+    margin: 0;
+    
 }
-.tab svg {
-	fill: var(--theme-color);
-	width: 32px;
-	height: 32px;
+
+.background{
+    background-image: linear-gradient(130deg,#4ACB75, #50B098, #4A8A95);
+    height: 100vh;
 }
-.tap p {
-	margin: 0;
+
+.whiteTextMiddle{   
+    padding-top: 5vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    margin: 0;  
+}
+
+
+.content{
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+.content p{
+    color: white;
+    margin-top: 30px;
+}
+
+nav{
+    position: fixed; /*Position fixed zorgt ervoor dat het element op dezelfde plek op het scherm blijft staan*/
+    bottom: 0; /*Je moet wel nog aangeven waar deze komt te staan, met bottom 0 blijft het element onderaan je scherm staan*/
+    /*border-top: 1px solid var(--theme-color); /*Dit werkt hetzelfde als border maar heeft alleen maar een border aan de bovenkant*/
+    left: 0;
+    right: 0; /*De elementen en de border waren niet meer zo breed als het scherm door position fixed. Met left en right 0 worden deze weer zo wijd*/
+              /*Dit zou ook gewoon kunnen met widht 100% of 100vw*/
+    
+}
+
+.heartIcon{
+    padding-top: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.tabs{
+    height: var(--nav-height);
+    display: flex;
+}
+
+.tab{
+flex-grow: 1; /*Net als met grid columns zorgt flex-grow 1 ervoor dat alle elementen dezelfde grootte krijgen*/
+/*Het voordaal hiervan is dat je makkelijk een extra element toe kan voegen, bij grid moet je dan de fractions ook aanpassen in de css*/
+display: flex;
+justify-content: center;
+align-items: center;
+text-decoration: none;
+color: white;
+flex-direction: column; /*Zorgt ervoor dat de svg en de link boven elkaar komen te staan ipv naast elkaar*/
+background-color: var(--theme-color);
+}
+.tab.active{
+    background-color: rgb(77, 122, 123);
+}
+
+.tab svg{
+    width: 32px;
+    height: 32px;
+    fill: white;
+}
+
+
+.content.dataBlocks{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+
+.dataBlock{
+    margin: 3vw;
+    height: 15vh;
+    width: 33vw;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
+    display: flex;
+    justify-content: center;
+    
+}
+
+.trendBlock{
+    width: 66vw;
+    height: 12vh;
+}
+
+.dataBlockRed{
+    background-color: #FF6968;
+}
+.dataBlockPurple{
+    background-color:#7A54FF;
+}
+.dataBlockBlue{
+    background-color:#26B2E9;
+}
+.dataBlockGreen{
+    background-color:#84B548;
 }
