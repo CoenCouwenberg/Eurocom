@@ -3,37 +3,47 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mobilometer Trends</title>
+        <title>Mobilometer Activiteiten</title>
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
     </head>
 
     <body>
-        <div class="background">
+        <div>
             <header>
-                <h1 class="whiteTextMiddle">Trends</h1>
+                <section class="content dataBlocks">
+                    <nav class="topNav">
+                        <div class="tabsTop">
+                            <a href="#dag" id="LeftTab" class="tabTop active">Dag</a>
+                            <a href="#week" class="tabTop">Week</a>
+                            <a href="#maand" class="tabTop">Maand</a>
+                        </div>
+                    </nav>
+                </section>
+                <section class="content dataBlocks">
+                    <a href="#">
+                        <div class="dataBlock trendBlock dataBlockGreen">
+                            <p>Activiteiten</p>
+                        </div>
+                    </a>
+                </section>
             </header>
         
             <main>
                 <section class="content dataBlocks">
                     <a href="#">
-                        <div class="dataBlock trendBlock dataBlockRed">
-                            <p>HeartBeat</p>
+                        <div class="dataBlock trendBlock dataBlockPurple">
+                            <p>Traplopen</p>
                         </div>
                     </a>
                     <a href="#">
                         <div class="dataBlock trendBlock dataBlockPurple">
-                            <p>Stappen</p>
+                            <p>Gaan zitten</p>
                         </div>
                     </a>
-                    <a href="activiteiten.html">
-                        <div class="dataBlock trendBlock dataBlockGreen">
-                            <p>Activiteiten</p>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="dataBlock trendBlock dataBlockBlue">
-                            <p>Lichaamstemp</p>
+                    <a href="gaanstaan.html">
+                        <div class="dataBlock trendBlock dataBlockRed">
+                            <p>Gaan staan</p>
                         </div>
                     </a>
                 </section>
@@ -50,5 +60,4 @@
             </footer>
         </div>
     </body>
-
 </html>

@@ -3,39 +3,92 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mobilometer Trends</title>
+        <title>Mobilometer Grafiek</title>
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     </head>
 
     <body>
-        <div class="background">
+        <div>
             <header>
-                <h1 class="whiteTextMiddle">Trends</h1>
+                <section class="content dataBlocks">
+                    <a href="#">
+                        <div class="dataBlock trendBlock dataBlockRed">
+                            <p>Gaan staan</p>
+                        </div>
+                    </a>
+                </section>
             </header>
         
             <main>
                 <section class="content dataBlocks">
-                    <a href="#">
-                        <div class="dataBlock trendBlock dataBlockRed">
-                            <p>HeartBeat</p>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="dataBlock trendBlock dataBlockPurple">
-                            <p>Stappen</p>
-                        </div>
-                    </a>
-                    <a href="activiteiten.html">
-                        <div class="dataBlock trendBlock dataBlockGreen">
-                            <p>Activiteiten</p>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="dataBlock trendBlock dataBlockBlue">
-                            <p>Lichaamstemp</p>
-                        </div>
-                    </a>
+                    <canvas id="canvas"></canvas>
+
+                    <script>
+                        var jsonfile = {
+                            "jsonarray": [{
+                            "dag": "8/11",
+                            "snelheid": 4.0
+                            }, {
+                            "dag": "9/11",
+                            "snelheid": 4.30
+                            }, {
+                            "dag": "10/11",
+                            "snelheid": 5
+                            }, {
+                            "dag": "11/11",
+                            "snelheid": 4.20
+                            }, {
+                            "dag": "12/11",
+                            "snelheid": 4.38
+                            }, {
+                            "dag": "13/11",
+                            "snelheid": 6.0
+                            }, {
+                            "dag": "14/11",
+                            "snelheid": 5.4
+                            }, {
+                            "dag": "15/11",
+                            "snelheid": 3.8
+                            }, {
+                            "dag": "16/11",
+                            "snelheid": 4.5
+                            }, {
+                            "dag": "17/11",
+                            "snelheid": 6.2
+                            }, {
+                            "dag": "18/11",
+                            "snelheid": 4.5
+                            }, {
+                            "dag": "19/11",
+                            "snelheid": 7.32
+                            }]
+                        };
+                        
+                        var labels = jsonfile.jsonarray.map(function(e) {
+                            return e.dag;
+                        });
+                        var data = jsonfile.jsonarray.map(function(e) {
+                            return e.snelheid;
+                        });;
+                        
+                        var ctx = canvas.getContext('2d');
+                        var config = {
+                            type: 'line',
+                            data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Graph Line',
+                                data: data,
+                                backgroundColor: 'rgba(0, 119, 204, 0.3)'
+                            }]
+                            }
+                        };
+                        
+                        var chart = new Chart(ctx, config);                    
+                    </script>
+
                 </section>
             </main>
             
@@ -50,5 +103,4 @@
             </footer>
         </div>
     </body>
-
 </html>
