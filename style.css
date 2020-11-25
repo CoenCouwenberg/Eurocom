@@ -98,7 +98,6 @@ body {
 
 .content p {
   color: white;
-  margin-top: 30px;
 }
 
 .botNav {
@@ -155,14 +154,37 @@ body {
 }
 
 .dataBlock {
-  margin: 3vw;
-  height: 15vh;
-  width: 33vw;
+  margin: 2vw;
+  height: 17vh;
+  width: 32vw;
   border-radius: 10px;
   box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
-  display: flex;
-  justify-content: center;
 }
+
+.blockInfo{
+  padding-left: 2vw;
+  padding-right: 2vw;
+  
+}
+.topInfo {
+  margin-top: 3px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.middleInfo {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+.bottomInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
 
 .dataBlockSquare {
   margin: 3vw;
@@ -193,3 +215,23 @@ body {
 .dataBlockGreen {
   background-color: #84b548;
 }
+
+
+
+.marginTop { /*Dit kun je gebruiken wanneer een element een kleine margin top nodig heeft*/
+  margin-top: 5vh;
+}
+
+.screen{
+  height: 100%;
+  min-width: 100vw; /*Hiermee maak je iedere screen zo breed als het hele scherm, als je 3 classes met screen hebt heb je dus een breedte van 3x je scherm*/
+  scroll-snap-align: center;  /*Hiermee snapt het beeld meteen naar de center van de screen wanneer je voor de helft scrollt.*/
+}
+
+.contentSlide {
+  display: flex;
+  overflow-x: hidden; /*Hiermee kun je niet scrollen en alleen de knoppen gebruiken*/
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; /*Als je deze weghaalt snap je meteen naar de volgende page met de knoppen, dit ligt er net aan wat je fijner vind*/
+}
+

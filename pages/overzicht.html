@@ -5,28 +5,101 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mobilometer Overzicht</title>
         <link rel="stylesheet" href="../style.css">
-        <script src="../script.js"></script>
+        <script src="../js/main.js"></script>
     </head>
 
     <body>
         <div class="background">
             <header>
                 <h1 class="whiteTextMiddle">Overzicht</h1>
+
+                <section class="dataBlocks"> 
+                    <nav class="topNav">
+                        <div class="tabsTop">
+                            <a href="#dag" class="tabTop active">Dag</a>
+                            <a href="#week" class="tabTop">Week</a>
+                            <a href="#maand" class="tabTop">Maand</a>
+                        </div>
+                    </nav>
+                </section>
             </header>
         
             <main>
-                <section class="content dataBlocks">
-                    <div class="dataBlock dataBlockRed">
-                        <p>HeartBeat</p>
+                
+
+                <section class="contentSlide">
+                    <!-- Datablocks Dag -->
+                    <div id="dag" class="contentblock screen">
+                        <section class="content dataBlocks">
+                            <div class="dataBlock dataBlockRed blockInfo marginTop">
+                                <p class="topInfo">HeartBeat</p>
+                                <p class="middleInfo">69 bpm</p>
+                                <p class="bottomInfo">60-110 goed</p>
+                            </div>
+                            <div class="dataBlock dataBlockPurple blockInfo marginTop">
+                                <p class="topInfo">Stappen</p>
+                                <p class="middleInfo">3687 stappen</p>
+                                <p class="bottomInfo">Doel: 6000</p>
+                            </div>
+                            <div class="dataBlock dataBlockBlue blockInfo marginTop">
+                                <p class="topInfo">Lichaamstemp</p>
+                                <p class="middleInfo">36 °C</p>
+                                <p class="bottomInfo">35-38 °C goed</p>
+                            </div>
+                            <div class="dataBlock dataBlockGreen blockInfo marginTop">
+                                <p class="topInfo">Activiteiten</p>
+                                <p class="middleInfo">3 activiteiten</p>
+                                <p class="bottomInfo">Doel: 8</p>
+                            </div>
+                        </section>
                     </div>
-                    <div class="dataBlock dataBlockPurple">
-                        <p>Stappen</p>
+                    <!-- Datablocks Week -->
+                    <div id="week" class="contentblock screen">
+                        <section class="content dataBlocks">
+                            <div class="dataBlock dataBlockRed blockInfo marginTop">
+                                <p class="topInfo">HeartBeat</p>
+                                <p class="middleInfo">69 bpm</p>
+                                <p class="bottomInfo">60-110 goed</p>
+                            </div>
+                            <div class="dataBlock dataBlockPurple blockInfo marginTop">
+                                <p class="topInfo">Stappen</p>
+                                <p class="middleInfo">3687 stappen</p>
+                                <p class="bottomInfo">Doel: 6000</p>
+                            </div>
+                            <div class="dataBlock dataBlockBlue blockInfo marginTop">
+                                <p class="topInfo">Lichaamstemp</p>
+                                <p class="middleInfo">36 °C</p>
+                                <p class="bottomInfo">35-38 °C goed</p>
+                            </div>
+                            <div class="dataBlock dataBlockGreen blockInfo marginTop">
+                                <p class="topInfo">Activiteiten</p>
+                                <p class="middleInfo">3 activiteiten</p>
+                                <p class="bottomInfo">Doel: 8</p>
+                            </div>
                     </div>
-                    <div class="dataBlock dataBlockBlue">
-                        <p>Lichaamstemp</p>
-                    </div>
-                    <div class="dataBlock dataBlockGreen">
-                        <p>Activiteiten</p>
+                    <!-- Datablocks Maand -->
+                    <div id="maand" class="contentblock screen">
+                        <section class="content dataBlocks">
+                            <div class="dataBlock dataBlockRed blockInfo marginTop">
+                                <p class="topInfo">HeartBeat</p>
+                                <p class="middleInfo">69 bpm</p>
+                                <p class="bottomInfo">60-110 goed</p>
+                            </div>
+                            <div class="dataBlock dataBlockPurple blockInfo marginTop">
+                                <p class="topInfo">Stappen</p>
+                                <p class="middleInfo">3687 stappen</p>
+                                <p class="bottomInfo">Doel: 6000</p>
+                            </div>
+                            <div class="dataBlock dataBlockBlue blockInfo marginTop">
+                                <p class="topInfo">Lichaamstemp</p>
+                                <p class="middleInfo">36 °C</p>
+                                <p class="bottomInfo">35-38 °C goed</p>
+                            </div>
+                            <div class="dataBlock dataBlockGreen blockInfo marginTop">
+                                <p class="topInfo">Activiteiten</p>
+                                <p class="middleInfo">3 activiteiten</p>
+                                <p class="bottomInfo">Doel: 8</p>
+                            </div>
                     </div>
                 </section>
             </main>
