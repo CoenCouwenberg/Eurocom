@@ -9,6 +9,7 @@
   /*Hierin kun je variabelen definiëren, dit kan handig zijn wanneer je meerdere elementen hebt met dezelfde kleur en deze tegelijk wilt kunnen veranderen*/
   --theme-color: cadetblue; /*Nu heb je een variabele gemaakt genaamd --theme-color met de waarde cadetblue*/
   --header-height: 70px;
+  --hadNav-height: 50px;
   --botNav-height: 75px;
 }
 
@@ -16,12 +17,43 @@ body {
   background-image: linear-gradient(130deg, #4acb75, #50b098, #4a8a95);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  margin: 0;
+}
+
+.headNav {
+  /* position: fixed; Position fixed zorgt ervoor dat het element op dezelfde plek op het scherm blijft staan */
+  bottom: 0; /*Je moet wel nog aangeven waar deze komt te staan, met bottom 0 blijft het element onderaan je scherm staan*/
+  /*border-top: 1px solid var(--theme-color); /*Dit werkt hetzelfde als border maar heeft alleen maar een border aan de bovenkant*/
+  left: 0;
+  right: 0; /*De elementen en de border waren niet meer zo breed als het scherm door position fixed. Met left en right 0 worden deze weer zo wijd*/
+  /*Dit zou ook gewoon kunnen met widht 100% of 100vw*/
+}
+
+.headTabs {
+  height: var(--hadNav-height);
+  display: flex;
 }
 
 /* Topside navigation bar with "Dag", "Week", "Maand" */
 .topNav {
   background-color: white;
   border-radius: 30px 30px 30px 30px;
+}
+
+.headTab {
+  flex-grow: 1; /*Net als met grid columns zorgt flex-grow 1 ervoor dat alle elementen dezelfde grootte krijgen*/
+  /*Het voordaal hiervan is dat je makkelijk een extra element toe kan voegen, bij grid moet je dan de fractions ook aanpassen in de css*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  flex-direction: column; /*Zorgt ervoor dat de svg en de link boven elkaar komen te staan ipv naast elkaar*/
+  border-right: 1px solid white;
+  box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
+}
+.headTab:nth-child(4) {
+  border-right: none;
 }
 
 /* Set display: flex for the "tabs" in the topside navbar */
@@ -38,18 +70,16 @@ body {
   flex-direction: column;
   text-decoration: none;
   text-align: center;
+  color: black;
   width: 28vw;
   height: 5vh;
 }
+
 /* Set active styling for tabs in topside navbar */
 .tabTop.active {
   color: white;
   border-radius: 30px;
   background-color: #ff6968;
-}
-
-body {
-  margin: 0;
 }
 
 .whiteTextMiddle {
@@ -78,6 +108,7 @@ body {
   left: 0;
   right: 0; /*De elementen en de border waren niet meer zo breed als het scherm door position fixed. Met left en right 0 worden deze weer zo wijd*/
   /*Dit zou ook gewoon kunnen met widht 100% of 100vw*/
+  box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
 }
 
 .heartIcon {
@@ -101,7 +132,10 @@ body {
   text-decoration: none;
   color: white;
   flex-direction: column; /*Zorgt ervoor dat de svg en de link boven elkaar komen te staan ipv naast elkaar*/
-  background-color: var(--theme-color);
+  border-right: 1px solid white;
+}
+.tab:nth-child(3) {
+  border-right: none;
 }
 .tab.active {
   background-color: rgb(77, 122, 123);

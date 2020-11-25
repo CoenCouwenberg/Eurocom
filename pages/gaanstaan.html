@@ -6,6 +6,7 @@
         <title>Mobilometer Gaan staan</title>
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     </head>
 
     <body>
@@ -18,22 +19,85 @@
                         </div>
                     </a>
                 </section>
+                <section class="content dataBlocks">
+                    <nav class="topNav">
+                        <div class="tabsTop">
+                            <a href="#dag" id="LeftTab" class="tabTop active">Dag</a>
+                            <a href="#week" class="tabTop">Week</a>
+                            <a href="#maand" class="tabTop">Maand</a>
+                        </div>
+                    </nav>
+                </section>
             </header>
         
             <main>
                 <section class="content dataBlocks">
-                    <a href="graph.html">
-                        <div class="dataBlockSquare dataBlockRed">
-                            <h1>Huidige tijd</h1>
-                            <p>7.32 seconden</p>
-                        </div>
-                    </a>
-                    <a href="graph.html">
-                        <div class="dataBlockSquare dataBlockGreen">
-                            <h1>Gemiddelde tijd</h1>
-                            <p>4.22 seconden</p>
-                        </div>
-                    </a>
+                    <canvas id="canvas"></canvas>
+
+                    <script>
+                        var jsonfile = {
+                            "jsonarray": [{
+                            "dag": "8/11",
+                            "snelheid": 4.0
+                            }, {
+                            "dag": "9/11",
+                            "snelheid": 4.30
+                            }, {
+                            "dag": "10/11",
+                            "snelheid": 5
+                            }, {
+                            "dag": "11/11",
+                            "snelheid": 4.20
+                            }, {
+                            "dag": "12/11",
+                            "snelheid": 4.38
+                            }, {
+                            "dag": "13/11",
+                            "snelheid": 6.0
+                            }, {
+                            "dag": "14/11",
+                            "snelheid": 5.4
+                            }, {
+                            "dag": "15/11",
+                            "snelheid": 3.8
+                            }, {
+                            "dag": "16/11",
+                            "snelheid": 4.5
+                            }, {
+                            "dag": "17/11",
+                            "snelheid": 6.2
+                            }, {
+                            "dag": "18/11",
+                            "snelheid": 4.5
+                            }, {
+                            "dag": "19/11",
+                            "snelheid": 7.32
+                            }]
+                        };
+                        
+                        var labels = jsonfile.jsonarray.map(function(e) {
+                            return e.dag;
+                        });
+                        var data = jsonfile.jsonarray.map(function(e) {
+                            return e.snelheid;
+                        });;
+                        
+                        var ctx = canvas.getContext('2d');
+                        var config = {
+                            type: 'line',
+                            data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Graph Line',
+                                data: data,
+                                backgroundColor: 'rgba(0, 119, 204, 0.3)'
+                            }]
+                            }
+                        };
+                        
+                        var chart = new Chart(ctx, config);                    
+                    </script>
+
                 </section>
             </main>
             
