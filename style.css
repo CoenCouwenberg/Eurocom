@@ -1,80 +1,251 @@
 * {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-		'Open Sans', 'Helvetica Neue', sans-serif;
-}
+  /*Dit betekent dat dit betrekking heeft op alle elementen*/
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-decoration: none;
+} /*System-ui geeft de font van het system dat word gebruikt (bijvoorbeeld mac en Ios)*/
+
 :root {
-	--theme-color: #1a65db;
-	--header-height: 60px;
-	--nav-height: 75px;
+  /*Hierin kun je variabelen definiëren, dit kan handig zijn wanneer je meerdere elementen hebt met dezelfde kleur en deze tegelijk wilt kunnen veranderen*/
+  --theme-color: cadetblue; /*Nu heb je een variabele gemaakt genaamd --theme-color met de waarde cadetblue*/
+  --header-height: 70px;
+  --hadNav-height: 50px;
+  --botNav-height: 75px;
 }
-header {
-	background-color: var(--theme-color);
-	color: white;
-	height: var(--header-height);
-	display: flex;
-	justify-content: center;
-	align-items: center;
+
+body {
+  background-image: linear-gradient(130deg, #4acb75, #50b098, #4a8a95);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
 }
-main {
-	height: calc(100vh - var(--nav-height) - var(--header-height));
-	background-color: #ececec;
-	display: grid;
-	grid-template-columns: repeat(3, 100vw);
-	overflow-x: scroll;
-	scroll-snap-type: x mandatory;
-	scroll-behavior: smooth;
+
+.headNav {
+  /* position: fixed; Position fixed zorgt ervoor dat het element op dezelfde plek op het scherm blijft staan */
+  bottom: 0; /*Je moet wel nog aangeven waar deze komt te staan, met bottom 0 blijft het element onderaan je scherm staan*/
+  /*border-top: 1px solid var(--theme-color); /*Dit werkt hetzelfde als border maar heeft alleen maar een border aan de bovenkant*/
+  left: 0;
+  right: 0; /*De elementen en de border waren niet meer zo breed als het scherm door position fixed. Met left en right 0 worden deze weer zo wijd*/
+  /*Dit zou ook gewoon kunnen met widht 100% of 100vw*/
 }
-.screen {
-	height: 100%;
-	scroll-snap-align: center;
+
+.headTabs {
+  height: var(--hadNav-height);
+  display: flex;
 }
-.box {
-	display: flex;
-	flex-wrap: wrap;
-	height: 40px;
-	align-content: space-between;
+
+/* Topside navigation bar with "Dag", "Week", "Maand" */
+.topNav {
+  background-color: white;
+  border-radius: 30px 30px 30px 30px;
 }
-nav {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	border-top: 1px solid var(--theme-color);
+
+.headTab {
+  flex-grow: 1; /*Net als met grid columns zorgt flex-grow 1 ervoor dat alle elementen dezelfde grootte krijgen*/
+  /*Het voordaal hiervan is dat je makkelijk een extra element toe kan voegen, bij grid moet je dan de fractions ook aanpassen in de css*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  flex-direction: column; /*Zorgt ervoor dat de svg en de link boven elkaar komen te staan ipv naast elkaar*/
+  border-right: 1px solid white;
+  box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
 }
-/* GRID  */
-/* .tabs {
-	height: 75px;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	justify-items: center;
-	align-items: center;
-} */
+.headTab:nth-child(4) {
+  border-right: none;
+}
+
+/* Set display: flex for the "tabs" in the topside navbar */
+.tabsTop {
+  display: flex;
+  align-items: center;
+}
+
+/* Set styling for each tab in the top navbar */
+.tabTop {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  width: 28vw;
+  height: 5vh;
+}
+
+/* Set active styling for tabs in topside navbar */
+.tabTop.active {
+  color: white;
+  border-radius: 30px;
+  background-color: #ff6968;
+}
+
+.whiteTextMiddle {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.greyTextMiddle {
+  color: rgba(30, 30, 30, 0.619);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  
+}
+
+h2{
+  padding-top: 0;
+}
+
+.content {
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.content p {
+  color: white;
+}
+
+.botNav {
+  position: fixed; /*Position fixed zorgt ervoor dat het element op dezelfde plek op het scherm blijft staan*/
+  bottom: 0; /*Je moet wel nog aangeven waar deze komt te staan, met bottom 0 blijft het element onderaan je scherm staan*/
+  /*border-top: 1px solid var(--theme-color); /*Dit werkt hetzelfde als border maar heeft alleen maar een border aan de bovenkant*/
+  left: 0;
+  right: 0; /*De elementen en de border waren niet meer zo breed als het scherm door position fixed. Met left en right 0 worden deze weer zo wijd*/
+  /*Dit zou ook gewoon kunnen met widht 100% of 100vw*/
+  box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
+}
+
+.heartIcon {
+  padding-top: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .tabs {
-	height: var(--nav-height);
-	display: flex;
-	align-items: center;
+  height: var(--botNav-height);
+  display: flex;
 }
+
 .tab {
-	display: block;
-	flex-grow: 1;
-	text-align: center;
-	text-decoration: none;
-	border-top: var(--theme-color);
-	opacity: 0.6;
-	/* align-self: center; */
+  flex-grow: 1; /*Net als met grid columns zorgt flex-grow 1 ervoor dat alle elementen dezelfde grootte krijgen*/
+  /*Het voordaal hiervan is dat je makkelijk een extra element toe kan voegen, bij grid moet je dan de fractions ook aanpassen in de css*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  flex-direction: column; /*Zorgt ervoor dat de svg en de link boven elkaar komen te staan ipv naast elkaar*/
+  border-right: 1px solid white;
 }
-.tab.active {
-	opacity: 1;
+.tab:nth-child(3) {
+  border-right: none;
 }
+.active {
+  background-color: rgb(77, 122, 123);
+}
+
 .tab svg {
-	fill: var(--theme-color);
-	width: 32px;
-	height: 32px;
+  width: 32px;
+  height: 32px;
+  fill: white;
 }
-.tap p {
-	margin: 0;
+
+.dataBlocks {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
+.dataBlock {
+  margin: 2vw;
+  height: 17vh;
+  width: 32vw;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
+}
+
+.blockInfo{
+  padding-left: 2vw;
+  padding-right: 2vw;
+  
+}
+.topInfo {
+  margin-top: 3px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.middleInfo {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+.bottomInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+
+.dataBlockSquare {
+  margin: 3vw;
+  height: 27vh;
+  width: 80vw;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.trendBlock {
+  width: 80vw;
+  height: 12vh;
+}
+
+.dataBlockRed {
+  background-color: #ff6968;
+}
+.dataBlockPurple {
+  background-color: #7a54ff;
+}
+.dataBlockBlue {
+  background-color: #26b2e9;
+}
+.dataBlockGreen {
+  background-color: #84b548;
+}
+
+
+
+.marginTop { /*Dit kun je gebruiken wanneer een element een kleine margin top nodig heeft*/
+  margin-top: 5vh;
+}
+.smallMarginTop {
+  margin-top: 1vh;
+}
+
+.screen{
+  height: 100%;
+  min-width: 100vw; /*Hiermee maak je iedere screen zo breed als het hele scherm, als je 3 classes met screen hebt heb je dus een breedte van 3x je scherm*/
+  scroll-snap-align: center;  /*Hiermee snapt het beeld meteen naar de center van de screen wanneer je voor de helft scrollt.*/
+}
+
+.contentSlide {
+  display: flex;
+  overflow-x: hidden; /*Hiermee kun je niet scrollen en alleen de knoppen gebruiken*/
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; /*Als je deze weghaalt snap je meteen naar de volgende page met de knoppen, dit ligt er net aan wat je fijner vind*/
+}
+
