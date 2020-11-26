@@ -6,6 +6,7 @@
         <title>Mobilometer Activiteiten</title>
         <link rel="stylesheet" href="../style.css">
         <script src="../js/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     </head>
 
     <body>
@@ -13,7 +14,7 @@
             <nav class="headNav">
                 <div class="headTabs">
                     <a href="wandelen.html" class="headTab">Wandelen</a>
-                    <a href="zitten.html" class="headTab">Zitten</a>
+                    <a href="zitten.html" class="headTab  active">Zitten</a>
                     <a href="#staan" class="headTab">Staan</a>
                     <a href="#traplopen" class="headTab">Traplopen</a>
                 </div>
@@ -28,12 +29,112 @@
                 </nav>
             </section>                
         </header>
-    
-        <main>
-            <section class="content dataBlocks">
-            </section>
-        </main>
-        
+        <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
+        <h1 class="whiteTextMiddle">7 keer gaan zitten</h1>
+        <h3 class="greyTextMiddle">Benodigde tijd - gaan zitten</h3>
+
+        <canvas id="canvas" width="400" height="170"></canvas>
+
+        <h3 class="greyTextMiddle">Gemiddelde tijd - gaan zitten</h3>
+        <h1 class="whiteTextMiddle">4.3 Seconden</h1>
+
+        <canvas id="canvas2" width="400" height="170"></canvas>
+
+        <script>
+            var jsonfile = {
+                "jsonarray": [{
+                   "month": "0:00",
+                   "infected": 0
+                }, {
+                   "month": "4:00",
+                   "infected": 0
+                }, {
+                   "month": "8:00",
+                   "infected": 120
+                }, {
+                   "month": "12:00",
+                   "infected": 783
+                }, {
+                   "month": "16:00",
+                   "infected": 2394
+                }, {
+                   "month": "20:00",
+                   "infected": 873
+                }, {
+                   "month": "23:59(u)",
+                   "infected": 120
+                }]
+            };
+             
+            var labels = jsonfile.jsonarray.map(function(e) {
+                return e.month;
+            });
+            var data = jsonfile.jsonarray.map(function(e) {
+                return e.infected;
+            });;
+             
+            var ctx = canvas.getContext('2d');
+            var config = {
+                type: 'bar',
+                data: {
+                   labels: labels,
+                   datasets: [{
+                      label: 'Seconden',
+                      data: data,
+                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
+                   }]
+                }
+            };
+             
+            var chart = new Chart(ctx, config);
+
+            var jsonfile = {
+                "jsonarray": [{
+                   "month": "0:00",
+                   "infected": 4.4
+                }, {
+                   "month": "4:00",
+                   "infected": 4.2
+                }, {
+                   "month": "8:00",
+                   "infected": 4.1
+                }, {
+                   "month": "12:00",
+                   "infected": 4.0
+                }, {
+                   "month": "16:00",
+                   "infected": 4.2
+                }, {
+                   "month": "20:00",
+                   "infected": 4.5
+                }, {
+                   "month": "23:59(u)",
+                   "infected": 4.8
+                }]
+            };
+             
+            var labels = jsonfile.jsonarray.map(function(e) {
+                return e.month;
+            });
+            var data = jsonfile.jsonarray.map(function(e) {
+                return e.infected;
+            });;
+            
+            var ctx = canvas2.getContext('2d');
+            var config = {
+                type: 'line',
+                data: {
+                   labels: labels,
+                   datasets: [{
+                      label: 'Seconden',
+                      data: data,
+                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
+                   }]
+                }
+            };
+             
+            var chart = new Chart(ctx, config);
+        </script>
         <footer>
             <nav class="botNav">
                 <div class="tabs">
