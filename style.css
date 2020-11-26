@@ -83,12 +83,23 @@ body {
 }
 
 .whiteTextMiddle {
-  padding-top: 5vh;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
+}
+.greyTextMiddle {
+  color: rgba(30, 30, 30, 0.619);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  
+}
+
+h2{
+  padding-top: 0;
 }
 
 .content {
@@ -136,7 +147,7 @@ body {
 .tab:nth-child(3) {
   border-right: none;
 }
-.tab.active {
+.active {
   background-color: rgb(77, 122, 123);
 }
 
@@ -220,6 +231,9 @@ body {
 
 .marginTop { /*Dit kun je gebruiken wanneer een element een kleine margin top nodig heeft*/
   margin-top: 5vh;
+}
+.smallMarginTop {
+  margin-top: 1vh;
 }
 
 .screen{
