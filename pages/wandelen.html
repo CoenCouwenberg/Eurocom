@@ -6,7 +6,7 @@
         <title>Mobilometer Activiteiten</title>
         <link rel="stylesheet" href="../style.css">
         <script src="../js/main.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     </head>
 
     <body>
@@ -31,15 +31,15 @@
         </header>
     
 
-        <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
-        <h1 class="whiteTextMiddle">4.290 / 6.000</h1>
-        <h3 class="greyTextMiddle">dagelijkse stappen</h3>
+        <h2 class="greyTextMiddle smallMarginTop">Deze week heb je:</h2>
+        <h1 class="whiteTextMiddle" id="totaal"></h1>
+        <h3 class="greyTextMiddle">stappen gezet</h3>
 
         <canvas id="canvas" width="400" height="170"></canvas>
 
 
         <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
-        <h1 class="whiteTextMiddle">4.2 km/h</h1>
+        <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
 
         <canvas id="canvas2" width="400" height="170"></canvas>
 
@@ -78,103 +78,208 @@
 
 
         <script>
-            var jsonfile = {
-                "jsonarray": [{
-                   "month": "0:00",
-                   "infected": 0
-                }, {
-                   "month": "4:00",
-                   "infected": 0
-                }, {
-                   "month": "8:00",
-                   "infected": 120
-                }, {
-                   "month": "12:00",
-                   "infected": 783
-                }, {
-                   "month": "16:00",
-                   "infected": 2394
-                }, {
-                   "month": "20:00",
-                   "infected": 873
-                }, {
-                   "month": "23:59(u)",
-                   "infected": 120
-                }]
-             };
-             
-             var labels = jsonfile.jsonarray.map(function(e) {
-                return e.month;
-             });
-             var data = jsonfile.jsonarray.map(function(e) {
-                return e.infected;
-             });;
-             
-             var ctx = canvas.getContext('2d');
-             var config = {
-                type: 'bar',
-                data: {
-                   labels: labels,
-                   datasets: [{
-                      label: 'Graph Line',
-                      data: data,
-                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
-                   }]
-                }
-             };
-             
-             var chart = new Chart(ctx, config);
+         fetch('http://localhost:3000/stappenteller').then(result => {
+            return result.json();
+         }).then(data => {
+            
+            // var totaal = data[0].aantal
+            // + data[1].aantal
+            // + data[2].aantal
+            // + data[3].aantal
+            // + data[4].aantal
+            // + data[5].aantal;
+
+            var totaal = 0;
+            var stappenGemiddeld = 0;
+
+            data.forEach(element => {
+               totaal += element.aantal;
+            });
+            
+            stappenGemiddeld = Math.floor( totaal / 7);
+            console.log(stappenGemiddeld);
+
+            localStorage.setItem("totaal",totaal);
+
+            console.log(totaal);
+
+            document.getElementById("totaal").innerText = totaal;
+
+            var labels = data.map(function(e) {
+            return e.date;
+            });
+            var data = data.map(function(e) {
+               return e.aantal;
+            });;
+            
+            var ctx = canvas.getContext('2d');
+            var config = {
+               type: 'bar',
+               data: {
+               labels: labels,
+               datasets: [{
+                //   label: 'Graph Line',
+                  data: data,
+                  backgroundColor: function(context) {
+					var index = context.dataIndex;
+					var value = context.dataset.data[index];
+					return value < 3000 ? 'rgba(240,94,35)' :  // draw negative values in red
+						// index % 2 ? 'blue' :    // else, alternate values in blue and green
+						'rgba(0, 119, 204)';
+					}
+               }]
+			   }
+            };
+
+			
+
+            var chart = new Chart(ctx, config);
+
+			// let dateArray = []
+			// let stepsArray = []
+
+			// for(var e in data){
+			// 	dateArray.push(e.date)
+			// 	stepsArray.push(e.aantal)
+			// }
+
+			// OUTPUT
+			// ["10-11-2020", "13-11-2020", "30-11-2020"]
+
+		// 	var barChartData = {
+		// 	labels: dateArray,
+		// 	datasets: [
+		// 		{
+		// 			label: "My First dataset",
+		// 			fillColor: "rgba(220,220,220,0.5)", 
+		// 			strokeColor: "rgba(220,220,220,0.8)", 
+		// 			highlightFill: "rgba(220,220,220,0.75)",
+		// 			highlightStroke: "rgba(220,220,220,1)",
+		// 			data: stepsArray
+		// 		}
+		// 	]
+		// };
+
+
+		// var ctx = document.getElementById("canvas").getContext("2d");
+		// window.myObjBar = new Chart(ctx).Bar(barChartData, {
+		// 	responsive : true
+		// });
+
+		// var bars = myObjBar.datasets[0].bars;
+		// for(i=0;i<bars.length;i++){
+		// var color="green";
+		// //You can check for bars[i].value and put your conditions here
+		// if(bars[i].value<3){
+		// 	color="red";
+		// }
+		// else if(bars[i].value<5){
+		// 	color="orange"
+		
+		// }
+		// else if(bars[i].value<8){
+		// 	color="yellow"
+		// }
+		// else{
+		// 	color="green"
+		// }
+		
+		// bars[i].fillColor = color;
+
+		// }
+		// myObjBar.update(); //update the cahrt
+
+
+            
+         });
+
+
+         // WANDELSNELHEID
+         fetch('http://localhost:3000/wandelsnelheid').then(result => {
+            return result.json();
+         }).then(dataSnelheid => {
+
+
+            var totaalSnelheid = 0;
+
+            dataSnelheid.forEach(element => {
+               totaalSnelheid += element.snelheid;
+            });
+
+            document.getElementById("totaalSnelheid").innerText = totaalSnelheid / 6 + " km / uur";
+
+            var labels = dataSnelheid.map(function(e) {
+            return e.tijd;
+            });
+            var dataSnelheid = dataSnelheid.map(function(e) {
+               return e.snelheid;
+            });;
+            
+            var ctx = canvas2.getContext('2d');
+            var config = {
+               type: 'line',
+               data: {
+               labels: labels,
+               datasets: [{
+                  label: 'Graph Line',
+                  data: dataSnelheid,
+                  backgroundColor: 'rgba(0, 119, 204, 0.8)'
+               }]
+               }
+            };
+            
+            var chart = new Chart(ctx, config);
+         });
 
 
 
+            //  var jsonfile = {
+            //     "jsonarray": [{
+            //        "month": "0:00",
+            //        "infected": 4.3
+            //     }, {
+            //        "month": "4:00",
+            //        "infected": 4.2
+            //     }, {
+            //        "month": "8:00",
+            //        "infected": 4.2
+            //     }, {
+            //        "month": "12:00",
+            //        "infected": 4.1
+            //     }, {
+            //        "month": "16:00",
+            //        "infected": 4.1
+            //     }, {
+            //        "month": "20:00",
+            //        "infected": 4.1
+            //     }, {
+            //        "month": "23:59(u)",
+            //        "infected": 4.2
+            //     }]
+            //  };
+             
+            //  var labels = jsonfile.jsonarray.map(function(e) {
+            //     return e.month;
+            //  });
+            //  var data = jsonfile.jsonarray.map(function(e) {
+            //     return e.infected;
+            //  });;
+             
+            //  var ctx = canvas2.getContext('2d');
+            //  var config = {
+            //     type: 'line',
+            //     data: {
+            //        labels: labels,
+            //        datasets: [{
+            //           label: 'Graph Line',
+            //           data: data,
+            //           backgroundColor: 'rgba(0, 119, 204, 0.8)'
+            //        }]
+            //     }
+            //  };
+             
+            //  var chart = new Chart(ctx, config);
 
-
-             var jsonfile = {
-                "jsonarray": [{
-                   "month": "0:00",
-                   "infected": 4.3
-                }, {
-                   "month": "4:00",
-                   "infected": 4.2
-                }, {
-                   "month": "8:00",
-                   "infected": 4.2
-                }, {
-                   "month": "12:00",
-                   "infected": 4.1
-                }, {
-                   "month": "16:00",
-                   "infected": 4.1
-                }, {
-                   "month": "20:00",
-                   "infected": 4.1
-                }, {
-                   "month": "23:59(u)",
-                   "infected": 4.2
-                }]
-             };
-             
-             var labels = jsonfile.jsonarray.map(function(e) {
-                return e.month;
-             });
-             var data = jsonfile.jsonarray.map(function(e) {
-                return e.infected;
-             });;
-             
-             var ctx = canvas2.getContext('2d');
-             var config = {
-                type: 'line',
-                data: {
-                   labels: labels,
-                   datasets: [{
-                      label: 'Graph Line',
-                      data: data,
-                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
-                   }]
-                }
-             };
-             
-             var chart = new Chart(ctx, config);
             </script>
 
 
