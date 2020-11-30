@@ -53,12 +53,12 @@
                 <h1 class="whiteTextMiddle" id="totaal"></h1>
                 <h3 class="greyTextMiddle">stappen gezet</h3>
             
-                <canvas id="canvas" width="400" height="170"></canvas>
+                <canvas id="canvas3" width="400" height="170"></canvas>
             
                 <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
                 <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
             
-                <canvas id="canvas2" width="400" height="170"></canvas>
+                <canvas id="canvas4" width="400" height="170"></canvas>
                 
             </div>
 
@@ -88,6 +88,7 @@
         <!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
         <script>
+            //Stappen week
          fetch('http://localhost:3000/stappenteller').then(result => {
             return result.json();
          }).then(data => {
@@ -204,7 +205,7 @@
          });
 
 
-         // WANDELSNELHEID
+         // WANDELSNELHEID week
          fetch('http://localhost:3000/wandelsnelheid').then(result => {
             return result.json();
          }).then(dataSnelheid => {
@@ -289,6 +290,111 @@
             //  };
              
             //  var chart = new Chart(ctx, config);
+
+
+
+
+            //Stappen maand
+         fetch('http://localhost:3000/stappenteller').then(result => {
+            return result.json();
+         }).then(data => {
+            
+            // var totaal = data[0].aantal
+            // + data[1].aantal
+            // + data[2].aantal
+            // + data[3].aantal
+            // + data[4].aantal
+            // + data[5].aantal;
+
+            var totaal = 0;
+            var stappenGemiddeld = 0;
+
+            data.forEach(element => {
+               totaal += element.aantal;
+            });
+            
+            stappenGemiddeld = Math.floor( totaal / 7);
+            console.log(stappenGemiddeld);
+
+            localStorage.setItem("totaal",totaal);
+
+            console.log(totaal);
+
+            document.getElementById("totaal").innerText = totaal;
+
+            var labels = data.map(function(e) {
+            return e.date;
+            });
+            var data = data.map(function(e) {
+               return e.aantal;
+            });;
+            
+            var ctx = canvas3.getContext('2d');
+            var config = {
+               type: 'bar',
+               data: {
+               labels: labels,
+               datasets: [{
+                //   label: 'Graph Line',
+                  data: data,
+                  backgroundColor: function(context) {
+					var index = context.dataIndex;
+					var value = context.dataset.data[index];
+					return value < 3000 ? 'rgba(240,94,35)' :  // draw negative values in red
+						// index % 2 ? 'blue' :    // else, alternate values in blue and green
+						'rgba(0, 119, 204)';
+					}
+               }]
+			   }
+            };
+
+			
+
+            var chart = new Chart(ctx, config);
+
+
+            
+         });
+
+
+         // WANDELSNELHEID maand
+         fetch('http://localhost:3000/wandelsnelheid').then(result => {
+            return result.json();
+         }).then(dataSnelheid => {
+
+
+            var totaalSnelheid = 0;
+
+            dataSnelheid.forEach(element => {
+               totaalSnelheid += element.snelheid;
+            });
+
+            document.getElementById("totaalSnelheid").innerText = totaalSnelheid / 6 + " km / uur";
+
+            var labels = dataSnelheid.map(function(e) {
+            return e.tijd;
+            });
+            var dataSnelheid = dataSnelheid.map(function(e) {
+               return e.snelheid;
+            });;
+            
+            var ctx = canvas4.getContext('2d');
+            var config = {
+               type: 'line',
+               data: {
+               labels: labels,
+               datasets: [{
+                  label: 'Graph Line',
+                  data: dataSnelheid,
+                  backgroundColor: 'rgba(0, 119, 204, 0.8)'
+               }]
+               }
+            };
+            
+            var chart = new Chart(ctx, config);
+         });
+
+
 
             </script>
 
