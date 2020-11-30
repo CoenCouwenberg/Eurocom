@@ -15,8 +15,8 @@
                 <div class="headTabs">
                     <a href="wandelen.html" class="headTab">Wandelen</a>
                     <a href="zitten.html" class="headTab">Zitten</a>
-                    <a href="staan.html" class="headTab active">Staan</a>
-                    <a href="traplopen.html" class="headTab">Traplopen</a>
+                    <a href="staan.html" class="headTab">Staan</a>
+                    <a href="traplopen.html" class="headTab active">Traplopen</a>
                 </div>
             </nav>
             <section class="dataBlocks"> 
@@ -32,28 +32,28 @@
 
         <section class="contentSlide">
             <div id="week" class="contentblock screen">
-                <!-- staan eerste screen -->
+                <!-- Traplopen eerste screen -->
                 <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
                 <h1 class="whiteTextMiddle" id="totaal"></h1>
-                <h3 class="greyTextMiddle">Benodigde tijd - gaan staan</h3>
+                <h3 class="greyTextMiddle">Benodigde tijd - Traplopen</h3>
         
                 <canvas id="canvas" width="400" height="170"></canvas>
         
-                <h3 class="greyTextMiddle">Gemiddelde tijd - gaan staan</h3>
+                <h3 class="greyTextMiddle">Gemiddelde tijd - Traplopen</h3>
                 <h1 class="whiteTextMiddle">4.3 Seconden</h1>
         
                 <canvas id="canvas2" width="400" height="170"></canvas>
             </div>
 
             <div id="maand" class="contentblock screen">
-                <!-- staan tweede screen -->
+                <!-- Traplopen tweede screen -->
                 <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
                 <h1 class="whiteTextMiddle" id="totaal"></h1>
-                <h3 class="greyTextMiddle">Benodigde tijd - gaan staan</h3>
+                <h3 class="greyTextMiddle">Benodigde tijd - Traplopen</h3>
         
                 <canvas id="canvas3" width="400" height="170"></canvas>
         
-                <h3 class="greyTextMiddle">Gemiddelde tijd - gaan staan</h3>
+                <h3 class="greyTextMiddle">Gemiddelde tijd - Traplopen</h3>
                 <h1 class="whiteTextMiddle">4.3 Seconden</h1>
         
                 <canvas id="canvas4" width="400" height="170"></canvas>
@@ -70,7 +70,7 @@
         <!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
         <script>
-            // Grafiek benodigde tijd staan week
+            // Grafiek benodigde tijd traplopen week
         fetch('http://localhost:3000/zitten').then(result => {
             return result.json();
          }).then(data => {
@@ -157,7 +157,7 @@
 
 
 
-                // gemiddelde tijd staan week (hier moet je de data nog fetchen)
+                // gemiddelde tijd traplopen week (hier moet je de data nog fetchen)
             var jsonfile = {
                 "jsonarray": [{
                    "month": "0:00",
@@ -205,7 +205,7 @@
              
             var chart = new Chart(ctx, config);
 
-                        // Grafiek benodigde tijd staan maand
+                        // Grafiek benodigde tijd traplopen maand
         fetch('http://localhost:3000/zitten').then(result => {
             return result.json();
          }).then(data => {
@@ -292,7 +292,7 @@
 
 
 
-                // gemiddelde tijd staan maand (hier moet je de data nog fetchen)
+                // gemiddelde tijd traplopen maand (hier moet je de data nog fetchen)
             var jsonfile = {
                 "jsonarray": [{
                    "month": "0:00",
