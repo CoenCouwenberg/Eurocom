@@ -38,7 +38,7 @@
                             </div>
                             <div class="dataBlock dataBlockPurple blockInfo marginTop">
                                 <p class="topInfo">Stappen</p>
-                                <p class="middleInfo">3687 stappen</p>
+                                <p class="middleInfo" id="totaalStappen">3687 stappen</p>
                                 <p class="bottomInfo">Doel: 6000</p>
                             </div>
                             <div class="dataBlock dataBlockBlue blockInfo marginTop">
@@ -114,5 +114,11 @@
                 </nav>
             </footer>
         </div>
+
+        <script>
+            // const totaal = 0;
+            document.getElementById("totaalStappen").innerText = localStorage.getItem('totaal');
+
+        </script>
     </body>
 </html>
