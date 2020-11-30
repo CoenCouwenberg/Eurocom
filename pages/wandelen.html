@@ -22,33 +22,49 @@
             <section class="dataBlocks"> 
                 <nav class="topNav">
                     <div class="tabsTop">
-                        <a href="#dag" class="tabTop active">Dag</a>
-                        <a href="#week" class="tabTop">Week</a>
+                        <a href="#week" class="tabTop active">Week</a>
                         <a href="#maand" class="tabTop">Maand</a>
                     </div>
                 </nav>
             </section>                
         </header>
-    
-
-        <h2 class="greyTextMiddle smallMarginTop">Deze week heb je:</h2>
-        <h1 class="whiteTextMiddle" id="totaal"></h1>
-        <h3 class="greyTextMiddle">stappen gezet</h3>
-
-        <canvas id="canvas" width="400" height="170"></canvas>
 
 
-        <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
-        <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
+        <section class="contentSlide">
+            <div id="week" class="contentblock screen">
+                <!-- Wandelen eerste screen -->
 
-        <canvas id="canvas2" width="400" height="170"></canvas>
+                <h2 class="greyTextMiddle smallMarginTop">Deze week heb je:</h2>
+                <h1 class="whiteTextMiddle" id="totaal"></h1>
+                <h3 class="greyTextMiddle">stappen gezet</h3>
+            
+                <canvas id="canvas" width="400" height="170"></canvas>
+            
+                <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
+                <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
+            
+                <canvas id="canvas2" width="400" height="170"></canvas>   
+          
+            </div>
+
+            <div id="maand" class="contentblock screen">
+                <!-- Wandelen tweede screen -->
+                <h2 class="greyTextMiddle smallMarginTop">Deze week heb je:</h2>
+                <h1 class="whiteTextMiddle" id="totaal"></h1>
+                <h3 class="greyTextMiddle">stappen gezet</h3>
+            
+                <canvas id="canvas" width="400" height="170"></canvas>
+            
+                <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
+                <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
+            
+                <canvas id="canvas2" width="400" height="170"></canvas>
+                
+            </div>
+
+        </section>
 
 
-
-
-
-
-        
         <footer>
             <nav class="botNav">
                 <div class="tabs">
@@ -69,13 +85,7 @@
 
 
 
-
-
-
-
-
-
-
+        <!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
         <script>
          fetch('http://localhost:3000/stappenteller').then(result => {
