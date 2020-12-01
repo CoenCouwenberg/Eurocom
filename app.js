@@ -51,7 +51,7 @@ mongoose.connect(
   .then(() => console.log("DB Connected"))
   .catch((err) => console.error(err));
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 5000;
 
 // Poort
 app.listen(port);

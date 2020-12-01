@@ -41,7 +41,7 @@
                 <canvas id="canvas" width="400" height="170"></canvas>
             
                 <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
-                <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
+                <h1 class="whiteTextMiddle" id="gemiddeldSnelheid"></h1>
             
                 <canvas id="canvas2" width="400" height="170"></canvas>   
           
@@ -49,14 +49,14 @@
 
             <div id="maand" class="contentblock screen">
                 <!-- Wandelen tweede screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Deze week heb je:</h2>
-                <h1 class="whiteTextMiddle" id="totaal"></h1>
+                <h2 class="greyTextMiddle smallMarginTop">Deze maand heb je:</h2>
+                <h1 class="whiteTextMiddle" id="totaalMaand"></h1>
                 <h3 class="greyTextMiddle">stappen gezet</h3>
             
                 <canvas id="canvas3" width="400" height="170"></canvas>
             
                 <h3 class="greyTextMiddle">Gemiddelde loopsnelheid</h3>
-                <h1 class="whiteTextMiddle" id="totaalSnelheid"> 4.2 km/h</h1>
+                <h1 class="whiteTextMiddle" id="gemiddeldMaand"></h1>
             
                 <canvas id="canvas4" width="400" height="170"></canvas>
                 
@@ -89,7 +89,8 @@
 
         <script>
             //Stappen week
-         fetch('/api/stappenteller', {
+		fetch('/api/stappenteller', {
+			// De eerste 7 records ophalen vanaf de database via de URL met de limit functie
             headers:{
                limit:7,
             }
@@ -105,36 +106,48 @@
             // + data[5].aantal;
 
             var totaal = 0;
-            var stappenGemiddeld = 0;
+			var stappenGemiddeld = 0;
+			var stappenVandaag = 0;
 
+			stappenVandaag = data[0].aantal;
+			
+			// Data bij elkaar op tellen naar mate hoeveel data er is
             data.forEach(element => {
                totaal += element.aantal;
             });
-            
+			
+			// Gemiddelde uitrekenen
             stappenGemiddeld = Math.floor( totaal / 7);
             console.log(stappenGemiddeld);
 
-            localStorage.setItem("totaal",totaal);
+			// Opslaan voor gebruik op andere pagina's
+            localStorage.setItem("stappenVandaag",stappenVandaag);
 
             console.log(totaal);
 
+			// Tekst in de HTML wijzigen door de ID te gebruiken
             document.getElementById("totaal").innerText = totaal;
 
+			// X & Y waardes mee geven aan de grafiek
             var labels = data.map(function(e) {
             return e.date;
             });
             var data = data.map(function(e) {
                return e.aantal;
             });;
-            
-            var ctx = canvas.getContext('2d');
+			
+			// Canvas maken
+			var ctx = canvas.getContext('2d');
+			// Instellingen van de grafiek
             var config = {
                type: 'bar',
                data: {
-               labels: labels,
+			   labels: labels,
+			   // Data gegevens
                datasets: [{
-                //   label: 'Graph Line',
-                  data: data,
+                  label: 'Stappen',
+				  data: data,
+				  // Backgorund color die veranderd wanneer het niet helemaal goed gaat
                   backgroundColor: function(context) {
 					var index = context.dataIndex;
 					var value = context.dataset.data[index];
@@ -146,8 +159,7 @@
 			   }
             };
 
-			
-
+			// Chart maken
             var chart = new Chart(ctx, config);
 
 			// let dateArray = []
@@ -219,13 +231,13 @@
          }).then(dataSnelheid => {
 
 
-            var totaalSnelheid = 0;
+            var gemiddeldSnelheid = 0;
 
             dataSnelheid.forEach(element => {
-               totaalSnelheid += element.snelheid;
+               gemiddeldSnelheid += element.snelheid;
             });
 
-            document.getElementById("totaalSnelheid").innerText = Math.round( totaalSnelheid / 7 * 100 ) / 100 + " km / uur";
+            document.getElementById("gemiddeldSnelheid").innerText = Math.round( gemiddeldSnelheid / 7 * 100 ) / 100 + " km/h";
 
             var labels = dataSnelheid.map(function(e) {
             return e.tijd;
@@ -321,21 +333,21 @@
             // + data[4].aantal
             // + data[5].aantal;
 
-            var totaal = 0;
+            var totaalMaand = 0;
             var stappenGemiddeld = 0;
 
             data.forEach(element => {
-               totaal += element.aantal;
+               totaalMaand += element.aantal;
             });
             
-            stappenGemiddeld = Math.floor( totaal / 7);
-            console.log(stappenGemiddeld);
+            // stappenGemiddeld = Math.floor( totaalMaand / 7);
+            // console.log(stappenGemiddeld);
 
-            localStorage.setItem("totaal",totaal);
+            // localStorage.setItem("totaal",totaal);
 
-            console.log(totaal);
+            // console.log(totaal);
 
-            document.getElementById("totaal").innerText = totaal;
+            document.getElementById("totaalMaand").innerText = totaalMaand;
 
             var labels = data.map(function(e) {
             return e.date;
@@ -378,13 +390,13 @@
          }).then(dataSnelheid => {
 
 
-            var totaalSnelheid = 0;
+            var gemiddeldMaand = 0;
 
             dataSnelheid.forEach(element => {
-               totaalSnelheid += element.snelheid;
+               gemiddeldMaand += element.snelheid;
             });
 
-            document.getElementById("totaalSnelheid").innerText = totaalSnelheid / 6 + " km / uur";
+            document.getElementById("gemiddeldMaand").innerText = Math.round( gemiddeldMaand / 30 *100 ) / 100 + " km/h";
 
             var labels = dataSnelheid.map(function(e) {
             return e.tijd;
@@ -400,8 +412,15 @@
                labels: labels,
                datasets: [{
                   label: 'Graph Line',
-                  data: dataSnelheid,
-                  backgroundColor: 'rgba(0, 119, 204, 0.8)'
+				  data: dataSnelheid,
+				  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  borderColor: function(context) {
+                     var index = context.dataIndex;
+                     var value = context.dataset.data[index];
+                     return value < 4.1 ? 'rgba(240,94,35)' :  // draw negative values in red
+                        // index % 2 ? 'blue' :    // else, alternate values in blue and green
+                        'rgba(0, 119, 204)';
+                     }
                }]
                }
             };
