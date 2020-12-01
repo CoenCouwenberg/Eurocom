@@ -33,28 +33,28 @@
         <section class="contentSlide">
             <div id="week" class="contentblock screen">
                 <!-- Traplopen eerste screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
+                <h2 class="greyTextMiddle smallMarginTop">Weekoverzicht</h2>
                 <h1 class="whiteTextMiddle" id="totaal"></h1>
                 <h3 class="greyTextMiddle">Aantal keer - Traplopen</h3>
         
                 <canvas id="canvas" width="400" height="170"></canvas>
         
                 <h3 class="greyTextMiddle">Gemiddelde tijd - Traplopen</h3>
-                <h1 class="whiteTextMiddle">4.3 Seconden</h1>
+                <h1 class="whiteTextMiddle" id="gemiddeldSnelheidWeek">Seconden</h1>
         
                 <canvas id="canvas2" width="400" height="170"></canvas>
             </div>
 
             <div id="maand" class="contentblock screen">
                 <!-- Traplopen tweede screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
-                <h1 class="whiteTextMiddle" id="totaal"></h1>
+                <h2 class="greyTextMiddle smallMarginTop">Maandoverzicht</h2>
+                <h1 class="whiteTextMiddle" id="totaalMaand"></h1>
                 <h3 class="greyTextMiddle">Aantal keer - Traplopen</h3>
         
                 <canvas id="canvas3" width="400" height="170"></canvas>
         
                 <h3 class="greyTextMiddle">Gemiddelde tijd - Traplopen</h3>
-                <h1 class="whiteTextMiddle">4.3 Seconden</h1>
+                <h1 class="whiteTextMiddle" id="gemiddeldMaand">Seconden</h1>
         
                 <canvas id="canvas4" width="400" height="170"></canvas>
             </div>
@@ -71,36 +71,110 @@
 
         <script>
             // Grafiek benodigde tijd traplopen week
-        fetch('/api/zitten').then(result => {
+            // Traplopen week
+            fetch('/api/traplopen', {
+			// De eerste 7 records ophalen vanaf de database via de URL met de limit functie
+            headers:{
+               limit:7,
+            }
+         }).then(result => {
             return result.json();
          }).then(data => {
-
-            var totaal = 0;
-
+         
+            totaalTrap = 0;
+			
+			// Data bij elkaar op tellen naar mate hoeveel data er is
             data.forEach(element => {
-               totaal += element.aantal;
+               totaalTrap += element.aantal;
             });
+			
+			// Gemiddelde uitrekenen
+            stappenGemiddeld = Math.floor( totaalTrap / 7);
+            // console.log(stappenGemiddeld);
 
-            console.log(totaal);
+			// Tekst in de HTML wijzigen door de ID te gebruiken
+            document.getElementById("totaal").innerText = totaalTrap;
 
-            document.getElementById("totaal").innerText = totaal + " keer gaan zitten";
-
+			// X & Y waardes mee geven aan de grafiek
             var labels = data.map(function(e) {
-            return e.tijd;
+            return e.date;
             });
             var data = data.map(function(e) {
                return e.aantal;
             });;
-            
-            var ctx = canvas.getContext('2d');
+			
+			// Canvas maken
+			var ctx = canvas.getContext('2d');
+			// Instellingen van de grafiek
             var config = {
-               type: 'bar',
+                  type: 'bar',
+                  data: {
+               labels: labels,
+               // Data gegevens
+                  datasets: [{
+                  label: 'Traplopen',
+                  data: data,
+                  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  // Backgorund color die veranderd wanneer het niet helemaal goed gaat
+                  // backgroundColor: function(context) {
+                  //    var index = context.dataIndex;
+                  //    var value = context.dataset.data[index];
+                  //    return value < 3000 ? 'rgba(240,94,35)' :  // draw negative values in red
+                  //       // index % 2 ? 'blue' :    // else, alternate values in blue and green
+                  //       'rgba(0, 119, 204)';
+                  // }
+                  }]
+               }
+            };
+
+			// Chart maken
+            var chart = new Chart(ctx, config);
+
+            
+         });
+
+
+         // Snelheid traplopen week
+         fetch('/api/traplopen', {
+			headers:{
+               limit:7,
+            }
+		 }).then(result => {
+            return result.json();
+         }).then(dataSnelheid => {
+
+
+            var gemiddeldSnelheid = 0;
+
+            dataSnelheid.forEach(element => {
+               gemiddeldSnelheid += element.aantal;
+            });
+
+            document.getElementById("gemiddeldSnelheidWeek").innerText = Math.round( gemiddeldSnelheid / 7 * 100 ) / 100 + " seconden";
+
+            var labels = dataSnelheid.map(function(e) {
+            return e.date;
+            });
+            var dataSnelheid = dataSnelheid.map(function(e) {
+               return e.aantal;
+            });
+            
+            var ctx = canvas2.getContext('2d');
+            var config = {
+               type: 'line',
                data: {
                labels: labels,
                datasets: [{
                   label: 'Graph Line',
-                  data: data,
-                  backgroundColor: 'rgba(0, 119, 204, 0.8)'
+                  data: dataSnelheid,
+                  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  borderColor: function(context) {
+					 var index = context.dataIndex;
+                     var value = context.dataset.data[index];
+                     return value < 12 ? 'rgba(240,94,35)' :  // draw negative values in red
+                        index % 8 ? 'blue' :    // else, alternate values in blue and green
+                        'rgba(0, 119, 204)';
+                     }
                }]
                }
             };
@@ -108,124 +182,42 @@
             var chart = new Chart(ctx, config);
          });
 
-            // var jsonfile = {
-            //     "jsonarray": [{
-            //        "month": "0:00",
-            //        "infected": 0
-            //     }, {
-            //        "month": "4:00",
-            //        "infected": 0
-            //     }, {
-            //        "month": "8:00",
-            //        "infected": 120
-            //     }, {
-            //        "month": "12:00",
-            //        "infected": 783
-            //     }, {
-            //        "month": "16:00",
-            //        "infected": 2394
-            //     }, {
-            //        "month": "20:00",
-            //        "infected": 873
-            //     }, {
-            //        "month": "23:59(u)",
-            //        "infected": 120
-            //     }]
-            // };
-             
-            // var labels = jsonfile.jsonarray.map(function(e) {
-            //     return e.month;
-            // });
-            // var data = jsonfile.jsonarray.map(function(e) {
-            //     return e.infected;
-            // });;
-             
-            // var ctx = canvas.getContext('2d');
-            // var config = {
-            //     type: 'bar',
-            //     data: {
-            //        labels: labels,
-            //        datasets: [{
-            //           label: 'Seconden',
-            //           data: data,
-            //           backgroundColor: 'rgba(0, 119, 204, 0.8)'
-            //        }]
-            //     }
-            // };
-             
-            // var chart = new Chart(ctx, config);
 
 
-
-                // gemiddelde tijd traplopen week (hier moet je de data nog fetchen)
-            var jsonfile = {
-                "jsonarray": [{
-                   "month": "0:00",
-                   "infected": 4.4
-                }, {
-                   "month": "4:00",
-                   "infected": 4.2
-                }, {
-                   "month": "8:00",
-                   "infected": 4.1
-                }, {
-                   "month": "12:00",
-                   "infected": 4.0
-                }, {
-                   "month": "16:00",
-                   "infected": 4.2
-                }, {
-                   "month": "20:00",
-                   "infected": 4.5
-                }, {
-                   "month": "23:59(u)",
-                   "infected": 4.8
-                }]
-            };
-             
-            var labels = jsonfile.jsonarray.map(function(e) {
-                return e.month;
-            });
-            var data = jsonfile.jsonarray.map(function(e) {
-                return e.infected;
-            });;
-            
-            var ctx = canvas2.getContext('2d');
-            var config = {
-                type: 'line',
-                data: {
-                   labels: labels,
-                   datasets: [{
-                      label: 'Seconden',
-                      data: data,
-                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
-                   }]
-                }
-            };
-             
-            var chart = new Chart(ctx, config);
-
-                        // Grafiek benodigde tijd traplopen maand
-        fetch('/api/zitten').then(result => {
+       // Traplopen maand
+         fetch('/api/traplopen').then(result => {
             return result.json();
          }).then(data => {
 
-            var totaal = 0;
+            var totaalMaand = 0;
+            var stappenGemiddeld = 0;
 
             data.forEach(element => {
-               totaal += element.aantal;
-            });
+               totaalMaand += element.aantal;
+			});
 
-            console.log(totaal);
+			traplopenVandaag = 0;
+			traplopenVandaag = data[29].aantal;
+			console.log("Vandaag traplopen: " + data[29].aantal);
 
-            document.getElementById("totaal").innerText = totaal + " keer gaan zitten";
+			// Opslaan voor gebruik op andere pagina's
+			localStorage.setItem("traplopenVandaag",traplopenVandaag);
+            
+            // stappenGemiddeld = Math.floor( totaalMaand / 7);
+            // console.log(stappenGemiddeld);
+
+            // localStorage.setItem("totaal",totaal);
+
+            // console.log(totaal);
+
+            document.getElementById("totaalMaand").innerText = totaalMaand;
 
             var labels = data.map(function(e) {
-            return e.tijd;
+            return e.date;
             });
             var data = data.map(function(e) {
                return e.aantal;
-            });;
+            });
             
             var ctx = canvas3.getContext('2d');
             var config = {
@@ -233,112 +225,61 @@
                data: {
                labels: labels,
                datasets: [{
-                  label: 'Graph Line',
+                //   label: 'Graph Line',
                   data: data,
                   backgroundColor: 'rgba(0, 119, 204, 0.8)'
+               }]
+			   }
+			};
+			
+            var chart = new Chart(ctx, config);
+         });
+
+
+         // WANDELSNELHEID maand
+         fetch('/api/traplopenSnelheid').then(result => {
+            return result.json();
+         }).then(dataSnelheid => {
+
+            var gemiddeldMaand = 0;
+
+            dataSnelheid.forEach(element => {
+               gemiddeldMaand += element.snelheid;
+			// console.log(element.snelheid);
+			});
+
+			document.getElementById("gemiddeldMaand").innerText = Math.round( gemiddeldMaand / 30 *100 ) / 100 + " seconden";
+			
+            var labels = dataSnelheid.map(function(e) {
+				return e.date;
+            });
+            var dataSnelheid = dataSnelheid.map(function(e) {
+               return e.snelheid;
+            });
+            
+            var ctx = canvas4.getContext('2d');
+            var config = {
+               type: 'line',
+               data: {
+               labels: labels,
+               datasets: [{
+                  label: 'Traplopen gemiddeld',
+				  data: dataSnelheid,
+				  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  borderColor: function(context) {
+                     var index = context.dataIndex;
+                     var value = context.dataset.data[index];
+                     return value < 4.1 ? 'rgba(240,94,35)' :  // draw negative values in red
+                        // index % 2 ? 'blue' :    // else, alternate values in blue and green
+                        'rgba(0, 119, 204)';
+                     }
                }]
                }
             };
             
             var chart = new Chart(ctx, config);
-         });
+		 });
 
-            // var jsonfile = {
-            //     "jsonarray": [{
-            //        "month": "0:00",
-            //        "infected": 0
-            //     }, {
-            //        "month": "4:00",
-            //        "infected": 0
-            //     }, {
-            //        "month": "8:00",
-            //        "infected": 120
-            //     }, {
-            //        "month": "12:00",
-            //        "infected": 783
-            //     }, {
-            //        "month": "16:00",
-            //        "infected": 2394
-            //     }, {
-            //        "month": "20:00",
-            //        "infected": 873
-            //     }, {
-            //        "month": "23:59(u)",
-            //        "infected": 120
-            //     }]
-            // };
-             
-            // var labels = jsonfile.jsonarray.map(function(e) {
-            //     return e.month;
-            // });
-            // var data = jsonfile.jsonarray.map(function(e) {
-            //     return e.infected;
-            // });;
-             
-            // var ctx = canvas.getContext('2d');
-            // var config = {
-            //     type: 'bar',
-            //     data: {
-            //        labels: labels,
-            //        datasets: [{
-            //           label: 'Seconden',
-            //           data: data,
-            //           backgroundColor: 'rgba(0, 119, 204, 0.8)'
-            //        }]
-            //     }
-            // };
-             
-            // var chart = new Chart(ctx, config);
-
-
-
-                // gemiddelde tijd traplopen maand (hier moet je de data nog fetchen)
-            var jsonfile = {
-                "jsonarray": [{
-                   "month": "0:00",
-                   "infected": 4.4
-                }, {
-                   "month": "4:00",
-                   "infected": 4.2
-                }, {
-                   "month": "8:00",
-                   "infected": 4.1
-                }, {
-                   "month": "12:00",
-                   "infected": 4.0
-                }, {
-                   "month": "16:00",
-                   "infected": 4.2
-                }, {
-                   "month": "20:00",
-                   "infected": 4.5
-                }, {
-                   "month": "23:59(u)",
-                   "infected": 4.8
-                }]
-            };
-             
-            var labels = jsonfile.jsonarray.map(function(e) {
-                return e.month;
-            });
-            var data = jsonfile.jsonarray.map(function(e) {
-                return e.infected;
-            });;
-            
-            var ctx = canvas4.getContext('2d');
-            var config = {
-                type: 'line',
-                data: {
-                   labels: labels,
-                   datasets: [{
-                      label: 'Seconden',
-                      data: data,
-                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
-                   }]
-                }
-            };
-             
-            var chart = new Chart(ctx, config);
         </script>
 
 

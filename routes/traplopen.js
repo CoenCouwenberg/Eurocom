@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 	try {
 		const traplopen = await Traplopen.find().limit(parseInt(limit));
 		res.json(traplopen);
-		console.log(traplopen);
+		// console.log(traplopen);
 	} catch(err) {
 		res.json({message:err});
 	}

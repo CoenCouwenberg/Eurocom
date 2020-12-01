@@ -33,28 +33,28 @@
         <section class="contentSlide">
             <div id="week" class="contentblock screen">
                 <!-- staan eerste screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
-                <h1 class="whiteTextMiddle" id="totaal"></h1>
+                <h2 class="greyTextMiddle smallMarginTop">Weekoverzicht</h2>
+                <h1 class="whiteTextMiddle" id="totaalZitten"></h1>
                 <h3 class="greyTextMiddle">Aantal keer - gaan staan</h3>
         
                 <canvas id="canvas" width="400" height="170"></canvas>
         
                 <h3 class="greyTextMiddle">Gemiddelde tijd - gaan staan</h3>
-                <h1 class="whiteTextMiddle">4.3 Seconden</h1>
+                <h1 class="whiteTextMiddle" id="totaalSnelheid" ></h1>
         
                 <canvas id="canvas2" width="400" height="170"></canvas>
             </div>
 
             <div id="maand" class="contentblock screen">
                 <!-- staan tweede screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Donderdag 15 oktober</h2>
-                <h1 class="whiteTextMiddle" id="totaal"></h1>
+                <h2 class="greyTextMiddle smallMarginTop">Maandoverzicht</h2>
+                <h1 class="whiteTextMiddle" id="totaalMaand"></h1>
                 <h3 class="greyTextMiddle">Aantal keer - gaan staan</h3>
         
                 <canvas id="canvas3" width="400" height="170"></canvas>
         
                 <h3 class="greyTextMiddle">Gemiddelde tijd - gaan staan</h3>
-                <h1 class="whiteTextMiddle">4.3 Seconden</h1>
+                <h1 class="whiteTextMiddle" id="gemiddeldSnelheidMaand"></h1>
         
                 <canvas id="canvas4" width="400" height="170"></canvas>
             </div>
@@ -71,22 +71,26 @@
 
         <script>
             // Grafiek benodigde tijd staan week
-        fetch('/api/zitten').then(result => {
+            fetch('/api/staan',{
+				headers:{
+				limit:7,
+				}
+			}).then(result => {
             return result.json();
          }).then(data => {
 
-            var totaal = 0;
+            var totaalStaan = 0;
 
             data.forEach(element => {
-               totaal += element.aantal;
+               totaalStaan += element.aantal;
             });
 
-            console.log(totaal);
+            console.log(totaalStaan);
 
-            document.getElementById("totaal").innerText = totaal + " keer gaan zitten";
+            document.getElementById("totaalZitten").innerText = totaalStaan;
 
             var labels = data.map(function(e) {
-            return e.tijd;
+            return e.date;
             });
             var data = data.map(function(e) {
                return e.aantal;
@@ -98,7 +102,7 @@
                data: {
                labels: labels,
                datasets: [{
-                  label: 'Graph Line',
+                  label: 'Week',
                   data: data,
                   backgroundColor: 'rgba(0, 119, 204, 0.8)'
                }]
@@ -108,105 +112,60 @@
             var chart = new Chart(ctx, config);
          });
 
-            // var jsonfile = {
-            //     "jsonarray": [{
-            //        "month": "0:00",
-            //        "infected": 0
-            //     }, {
-            //        "month": "4:00",
-            //        "infected": 0
-            //     }, {
-            //        "month": "8:00",
-            //        "infected": 120
-            //     }, {
-            //        "month": "12:00",
-            //        "infected": 783
-            //     }, {
-            //        "month": "16:00",
-            //        "infected": 2394
-            //     }, {
-            //        "month": "20:00",
-            //        "infected": 873
-            //     }, {
-            //        "month": "23:59(u)",
-            //        "infected": 120
-            //     }]
-            // };
-             
-            // var labels = jsonfile.jsonarray.map(function(e) {
-            //     return e.month;
-            // });
-            // var data = jsonfile.jsonarray.map(function(e) {
-            //     return e.infected;
-            // });;
-             
-            // var ctx = canvas.getContext('2d');
-            // var config = {
-            //     type: 'bar',
-            //     data: {
-            //        labels: labels,
-            //        datasets: [{
-            //           label: 'Seconden',
-            //           data: data,
-            //           backgroundColor: 'rgba(0, 119, 204, 0.8)'
-            //        }]
-            //     }
-            // };
-             
-            // var chart = new Chart(ctx, config);
 
 
+        // gemiddelde tijd staan week (hier moet je de data nog fetchen)
+          fetch('/api/staanSnelheid',{
+				headers:{
+				limit:7,
+				}
+			}).then(result => {
+				return result.json();
+				}).then(dataSnelheid => {
+				console.log(dataSnelheid);
 
-                // gemiddelde tijd staan week (hier moet je de data nog fetchen)
-            var jsonfile = {
-                "jsonarray": [{
-                   "month": "0:00",
-                   "infected": 4.4
-                }, {
-                   "month": "4:00",
-                   "infected": 4.2
-                }, {
-                   "month": "8:00",
-                   "infected": 4.1
-                }, {
-                   "month": "12:00",
-                   "infected": 4.0
-                }, {
-                   "month": "16:00",
-                   "infected": 4.2
-                }, {
-                   "month": "20:00",
-                   "infected": 4.5
-                }, {
-                   "month": "23:59(u)",
-                   "infected": 4.8
-                }]
-            };
-             
-            var labels = jsonfile.jsonarray.map(function(e) {
-                return e.month;
+            var totaalSnelheid = 0;
+
+            dataSnelheid.forEach(element => {
+               totaalSnelheid += element.snelheid;
             });
-            var data = jsonfile.jsonarray.map(function(e) {
-                return e.infected;
+
+            document.getElementById("totaalSnelheid").innerText = Math.round(totaalSnelheid / 7 * 100 ) / 100  + " seconden";
+
+            var labels = dataSnelheid.map(function(e) {
+            return e.date;
+            });
+            var dataSnelheid = dataSnelheid.map(function(e) {
+               return e.snelheid;
             });;
             
             var ctx = canvas2.getContext('2d');
             var config = {
-                type: 'line',
-                data: {
-                   labels: labels,
-                   datasets: [{
-                      label: 'Seconden',
-                      data: data,
-                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
-                   }]
-                }
+               type: 'line',
+               data: {
+               labels: labels,
+               datasets: [{
+                  label: 'Gemiddeld week',
+                  data: dataSnelheid,
+                  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  // Werkt niet?
+                  borderColor: function(context) {
+                     var index = context.dataIndex;
+                     var value = context.dataset.data[index];
+                     return value > 3.6 ? 'rgba(240,94,35)' :  // draw negative values in red
+                        // index % 2 ? 'blue' :    // else, alternate values in blue and green
+                        'rgba(0, 119, 204)';
+                     }
+               }]
+               }
             };
-             
+            
             var chart = new Chart(ctx, config);
+         });
+
 
                         // Grafiek benodigde tijd staan maand
-        fetch('/api/zitten').then(result => {
+         fetch('/api/staan').then(result => {
             return result.json();
          }).then(data => {
 
@@ -217,11 +176,17 @@
             });
 
             console.log(totaal);
+            staanVandaag = 0;
+			staanVandaag = data[29].aantal;
+			console.log("Vandaag: " + data[29].aantal);
 
-            document.getElementById("totaal").innerText = totaal + " keer gaan zitten";
+			// Opslaan voor gebruik op andere pagina's
+			localStorage.setItem("staanVandaag",staanVandaag);
+
+            document.getElementById("totaalMaand").innerText = totaal;
 
             var labels = data.map(function(e) {
-            return e.tijd;
+            return e.date;
             });
             var data = data.map(function(e) {
                return e.aantal;
@@ -233,7 +198,7 @@
                data: {
                labels: labels,
                datasets: [{
-                  label: 'Graph Line',
+                  label: 'Zitten maand',
                   data: data,
                   backgroundColor: 'rgba(0, 119, 204, 0.8)'
                }]
@@ -292,53 +257,50 @@
 
 
 
-                // gemiddelde tijd staan maand (hier moet je de data nog fetchen)
-            var jsonfile = {
-                "jsonarray": [{
-                   "month": "0:00",
-                   "infected": 4.4
-                }, {
-                   "month": "4:00",
-                   "infected": 4.2
-                }, {
-                   "month": "8:00",
-                   "infected": 4.1
-                }, {
-                   "month": "12:00",
-                   "infected": 4.0
-                }, {
-                   "month": "16:00",
-                   "infected": 4.2
-                }, {
-                   "month": "20:00",
-                   "infected": 4.5
-                }, {
-                   "month": "23:59(u)",
-                   "infected": 4.8
-                }]
-            };
-             
-            var labels = jsonfile.jsonarray.map(function(e) {
-                return e.month;
+         // gemiddelde tijd staan maand (hier moet je de data nog fetchen)
+         fetch('/api/staanSnelheid').then(result => {
+				return result.json();
+				}).then(dataSnelheid => {
+				// console.log(dataSnelheid);
+
+            var gemiddeldSnelheidMaand = 0;
+
+            dataSnelheid.forEach(element => {
+               gemiddeldSnelheidMaand += element.snelheid;
             });
-            var data = jsonfile.jsonarray.map(function(e) {
-                return e.infected;
+            console.log(dataSnelheid);
+
+            document.getElementById("gemiddeldSnelheidMaand").innerText = Math.round(gemiddeldSnelheidMaand / 30 * 100 ) / 100  + " seconden";
+
+            var labels = dataSnelheid.map(function(e) {
+            return e.date;
+            });
+            var dataSnelheid = dataSnelheid.map(function(e) {
+               return e.snelheid;
             });;
             
             var ctx = canvas4.getContext('2d');
             var config = {
-                type: 'line',
-                data: {
-                   labels: labels,
-                   datasets: [{
-                      label: 'Seconden',
-                      data: data,
-                      backgroundColor: 'rgba(0, 119, 204, 0.8)'
-                   }]
-                }
+               type: 'line',
+               data: {
+               labels: labels,
+               datasets: [{
+                  label: 'Staan Gemiddeld',
+                  data: dataSnelheid,
+                  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  borderColor: function(context) {
+                     var index = context.dataIndex;
+                     var value = context.dataset.dataSnelheid[index];
+                     return value < 4.1 ? 'rgba(240,94,35)' :  // draw negative values in red
+                        // index % 2 ? 'blue' :    // else, alternate values in blue and green
+                        'rgba(0, 119, 204)';
+                     }
+               }]
+               }
             };
-             
+            
             var chart = new Chart(ctx, config);
+         });
         </script>
 
 
