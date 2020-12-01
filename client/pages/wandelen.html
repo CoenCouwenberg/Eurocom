@@ -240,7 +240,7 @@
                data: {
                labels: labels,
                datasets: [{
-                  label: 'Graph Line',
+                  label: 'Wandelsnelheid week',
                   data: dataSnelheid,
                   backgroundColor: 'rgba(0, 119, 204, 0.8)',
                   borderColor: function(context) {
@@ -350,7 +350,7 @@
                data: {
                labels: labels,
                datasets: [{
-                //   label: 'Graph Line',
+                  label: 'Stappen maand',
                   data: data,
                   backgroundColor: function(context) {
 					var index = context.dataIndex;
@@ -399,9 +399,16 @@
                data: {
                labels: labels,
                datasets: [{
-                  label: 'Graph Line',
-                  data: dataSnelheid,
-                  backgroundColor: 'rgba(0, 119, 204, 0.8)'
+                  label: 'Wandelsnelheid maand',
+				  data: dataSnelheid,
+				  backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  borderColor: function(context) {
+                     var index = context.dataIndex;
+                     var value = context.dataset.data[index];
+                     return value < 4.1 ? 'rgba(240,94,35)' :  // draw negative values in red
+                        // index % 2 ? 'blue' :    // else, alternate values in blue and green
+                        'rgba(0, 119, 204)';
+                     }
                }]
                }
             };

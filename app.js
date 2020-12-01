@@ -25,12 +25,20 @@ const stappenRoute = require('./routes/stappenteller');
 const wandelRoute = require('./routes/wandelsnelheid');
 const zittenRoute = require('./routes/zitten');
 const zitSnelheidRoute = require('./routes/zitSnelheid');
+const staanRoute = require('./routes/staan');
+const staanSnelheidRoute = require('./routes/staanSnelheid');
+const traplopenRoute = require('./routes/traplopen');
+const traplopenSnelheidRoute = require('./routes/traplopenSnelheid');
 
 app.use('/api/posts', postsRoute);
 app.use('/api/stappenteller', stappenRoute);
 app.use('/api/wandelsnelheid', wandelRoute);
 app.use('/api/zitten', zittenRoute);
 app.use('/api/zitSnelheid', zitSnelheidRoute);
+app.use('/api/staan', staanRoute);
+app.use('/api/staanSnelheid', staanSnelheidRoute);
+app.use('/api/traplopen', traplopenRoute);
+app.use('/api/traplopenSnelheid', traplopenSnelheidRoute);
 app.use(express.static("client"));
 // app.use('/user', userRoute);ss
 
