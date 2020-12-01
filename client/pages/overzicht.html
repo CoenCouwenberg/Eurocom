@@ -49,8 +49,8 @@
                             </div>
                             <div class="dataBlock dataBlockGreen blockInfo marginTop">
                                 <p class="topInfo">Activiteiten</p>
-                                <p class="middleInfo">3 activiteiten</p>
-                                <p class="bottomInfo">Doel: 8</p>
+                                <p class="middleInfo" id="totaalActiviteiten">Activiteiten</p>
+                                <p class="bottomInfo">Doel: 100</p>
                             </div>
                         </section>
                     </div>
@@ -119,6 +119,10 @@
         <script>
             // const totaal = 0;
             document.getElementById("totaalStappen").innerText = localStorage.getItem('stappenVandaag');
+            
+            totaalActiviteiten = +localStorage.getItem("traplopenVandaag") + +localStorage.getItem("staanVandaag") + +localStorage.getItem("zittenVandaag");
+			console.log(totaalActiviteiten);
+            document.getElementById("totaalActiviteiten").innerText = totaalActiviteiten;
 
         </script>
     </body>

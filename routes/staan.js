@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 	try {
 		const staan = await Staan.find().limit(parseInt(limit));
 		res.json(staan);
-		console.log(staan);
+		// console.log(staan);
 	} catch(err) {
 		res.json({message:err});
 	}

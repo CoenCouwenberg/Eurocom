@@ -33,7 +33,7 @@
         <section class="contentSlide">
             <div id="week" class="contentblock screen">
                 <!-- Zitten eerste screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Deze week ben je</h2>
+                <h2 class="greyTextMiddle smallMarginTop">Weekoverzicht</h2>
                 <h1 class="whiteTextMiddle" id="totaal"></h1>
                 <h3 class="greyTextMiddle">Aantal keer - gaan zitten</h3>
         
@@ -47,7 +47,7 @@
 
             <div id="maand" class="contentblock screen">
                 <!-- Zitten tweede screen -->
-                <h2 class="greyTextMiddle smallMarginTop">Zitten - November</h2>
+                <h2 class="greyTextMiddle smallMarginTop">Maandoverzicht</h2>
                 <h1 class="whiteTextMiddle" id="totaalMaand"></h1>
                 <h3 class="greyTextMiddle">Aantal keer - gaan zitten</h3>
         
@@ -210,7 +210,7 @@
             var chart = new Chart(ctx, config);
          });
 
-                        // Grafiek benodigde tijd zitten maand
+        // Totaal aantal keer zitten
         fetch('/api/zitten').then(result => {
             return result.json();
          }).then(data => {
@@ -221,7 +221,13 @@
                totaal += element.aantal;
             });
 
-            console.log(totaal);
+			// console.log(totaal);
+			zittenVandaag = 0;
+			zittenVandaag = data[29].aantal;
+			console.log("Vandaag: " + data[29].aantal);
+
+			// Opslaan voor gebruik op andere pagina's
+			localStorage.setItem("zittenVandaag",zittenVandaag);
 
             document.getElementById("totaalMaand").innerText = totaal + " keer gaan zitten";
 
