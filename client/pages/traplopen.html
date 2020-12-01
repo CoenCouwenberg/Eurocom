@@ -71,7 +71,7 @@
 
         <script>
             // Grafiek benodigde tijd traplopen week
-        fetch('http://localhost:3000/zitten').then(result => {
+        fetch('/api/zitten').then(result => {
             return result.json();
          }).then(data => {
 
@@ -206,7 +206,7 @@
             var chart = new Chart(ctx, config);
 
                         // Grafiek benodigde tijd traplopen maand
-        fetch('http://localhost:3000/zitten').then(result => {
+        fetch('/api/zitten').then(result => {
             return result.json();
          }).then(data => {
 

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mobilometer Activiteiten</title>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../css/style.css">
         <script src="../js/main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     </head>
@@ -71,7 +71,7 @@
 
         <script>
             // Grafiek benodigde tijd zitten week
-        fetch('http://localhost:3000/zitten',{
+        fetch('/api/zitten',{
 				headers:{
 				limit:7,
 				}
@@ -162,7 +162,7 @@
 
 
                 // gemiddelde tijd zitten week (hier moet je de data nog fetchen)
-            fetch('http://localhost:3000/zitSnelheid',{
+            fetch('/api/zitSnelheid',{
 				headers:{
 				limit:7,
 				}
@@ -210,7 +210,7 @@
          });
 
                         // Grafiek benodigde tijd zitten maand
-        fetch('http://localhost:3000/zitten').then(result => {
+        fetch('/api/zitten').then(result => {
             return result.json();
          }).then(data => {
 
@@ -297,7 +297,7 @@
 
 
     	   // gemiddelde tijd zitten maand (hier moet je de data nog fetchen)
-			fetch('http://localhost:3000/zitSnelheid').then(result => {
+			fetch('/api/zitSnelheid').then(result => {
 				return result.json();
 				}).then(dataSnelheid => {
 				console.log(dataSnelheid);

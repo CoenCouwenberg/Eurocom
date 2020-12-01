@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mobilometer Activiteiten</title>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../css/style.css">
         <script src="../js/main.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     </head>
@@ -89,7 +89,7 @@
 
         <script>
             //Stappen week
-         fetch('http://localhost:3000/stappenteller', {
+         fetch('/api/stappenteller', {
             headers:{
                limit:7,
             }
@@ -210,7 +210,7 @@
 
 
          // WANDELSNELHEID week
-         fetch('http://localhost:3000/wandelsnelheid', {
+         fetch('/api/wandelsnelheid', {
 			headers:{
                limit:7,
             }
@@ -310,7 +310,7 @@
 
 
             //Stappen maand
-         fetch('http://localhost:3000/stappenteller').then(result => {
+         fetch('/api/stappenteller').then(result => {
             return result.json();
          }).then(data => {
             
@@ -373,7 +373,7 @@
 
 
          // WANDELSNELHEID maand
-         fetch('http://localhost:3000/wandelsnelheid').then(result => {
+         fetch('/api/wandelsnelheid').then(result => {
             return result.json();
          }).then(dataSnelheid => {
 
