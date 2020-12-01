@@ -26,11 +26,11 @@ const wandelRoute = require('./routes/wandelsnelheid');
 const zittenRoute = require('./routes/zitten');
 const zitSnelheidRoute = require('./routes/zitSnelheid');
 
-app.use('/posts', postsRoute);
-app.use('/stappenteller', stappenRoute);
-app.use('/wandelsnelheid', wandelRoute);
-app.use('/zitten', zittenRoute);
-app.use('/zitSnelheid', zitSnelheidRoute);
+app.use('/api/posts', postsRoute);
+app.use('/api/stappenteller', stappenRoute);
+app.use('/api/wandelsnelheid', wandelRoute);
+app.use('/api/zitten', zittenRoute);
+app.use('/api/zitSnelheid', zitSnelheidRoute);
 app.use(express.static("client"));
 // app.use('/user', userRoute);ss
 

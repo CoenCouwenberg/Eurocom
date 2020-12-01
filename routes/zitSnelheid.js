@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ZitSnelheid = require('../models/zitSnelheid');
+const ZitSnelheid = require('../models/ZitSnelheid');
 
 // Gets back ZITTENNNNN
 router.get('/', async (req, res) => {
