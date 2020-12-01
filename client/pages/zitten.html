@@ -162,7 +162,7 @@
 
 
                 // gemiddelde tijd zitten week (hier moet je de data nog fetchen)
-            fetch('/api/zitSnelheid',{
+         fetch('/api/zitSnelheid',{
 				headers:{
 				limit:7,
 				}
@@ -195,10 +195,11 @@
                   label: 'Gemiddeld week',
                   data: dataSnelheid,
                   backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                  // Werkt niet?
                   borderColor: function(context) {
                      var index = context.dataIndex;
                      var value = context.dataset.data[index];
-                     return value > 5 ? 'rgba(240,94,35)' :  // draw negative values in red
+                     return value > 3.6 ? 'rgba(240,94,35)' :  // draw negative values in red
                         // index % 2 ? 'blue' :    // else, alternate values in blue and green
                         'rgba(0, 119, 204)';
                      }
