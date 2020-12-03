@@ -1,3 +1,4 @@
+// Extensions
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -7,6 +8,7 @@ require('dotenv/config');
 
 // Middlewares
 // app.use(auth);
+// Available for outside
 app.use(cors());
 
 // app.use(bodyParser.json());
@@ -20,6 +22,7 @@ app.use(express.json());
 // 	console.log(data);
 // });
 
+// Routes
 const postsRoute = require('./routes/posts');
 const stappenRoute = require('./routes/stappenteller');
 const wandelRoute = require('./routes/wandelsnelheid');
@@ -53,11 +56,11 @@ app.get('/posts', (req, res) => {
 
 // Connect to the databasee
 mongoose.connect(
-    process.env.DB_CONNECTION,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => console.log("DB Connected"))
-  .catch((err) => console.error(err));
+	process.env.DB_CONNECTION,
+	{ useNewUrlParser: true, useUnifiedTopology: true }
+)
+	.then(() => console.log("DB Connected"))
+	.catch((err) => console.error(err));
 
 const port = process.env.PORT || 5000;
 
