@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Staan Schema
 const staanSchema = mongoose.Schema({
 	aantal: {
 		type: Number,
