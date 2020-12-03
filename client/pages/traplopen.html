@@ -67,8 +67,6 @@
 
 
 
-
-
 	<!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
 	<script>
@@ -132,7 +130,6 @@
 			// Chart maken
 			var chart = new Chart(ctx, config);
 
-
 		});
 
 
@@ -145,15 +142,18 @@
 			return result.json();
 		}).then(dataSnelheid => {
 
-
+			// var declareren
 			var gemiddeldSnelheid = 0;
 
+			// Bij elkaar optellen
 			dataSnelheid.forEach(element => {
 				gemiddeldSnelheid += element.aantal;
 			});
 
+			// Zet gemiddeldesnelheid in HTML
 			document.getElementById("gemiddeldSnelheidWeek").innerText = Math.round(gemiddeldSnelheid / 7 * 100) / 100 + " seconden";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.date;
 			});
@@ -161,6 +161,7 @@
 				return e.aantal;
 			});
 
+			// Canvas
 			var ctx = canvas2.getContext('2d');
 			var config = {
 				type: 'line',
@@ -170,6 +171,7 @@
 						label: 'Graph Line',
 						data: dataSnelheid,
 						backgroundColor: 'rgba(0, 119, 204, 0.8)',
+						// Wanneer waarde onder X komt wordt de grafiek oranje
 						borderColor: function (context) {
 							var index = context.dataIndex;
 							var value = context.dataset.data[index];
@@ -191,13 +193,16 @@
 			return result.json();
 		}).then(data => {
 
+			// Variabelen declareren
 			var totaalMaand = 0;
 			var stappenGemiddeld = 0;
 
+			// Aantal bij elkaar optellen
 			data.forEach(element => {
 				totaalMaand += element.aantal;
 			});
 
+			// Laatste dag van de maand traplopen
 			traplopenVandaag = 0;
 			traplopenVandaag = data[29].aantal;
 			console.log("Vandaag traplopen: " + data[29].aantal);
@@ -212,8 +217,10 @@
 
 			// console.log(totaal);
 
+			// totaalMaand in HTMl zetten
 			document.getElementById("totaalMaand").innerText = totaalMaand;
 
+			// X & Y
 			var labels = data.map(function (e) {
 				return e.date;
 			});
@@ -221,6 +228,7 @@
 				return e.aantal;
 			});
 
+			// Canvas van Chartjs
 			var ctx = canvas3.getContext('2d');
 			var config = {
 				type: 'bar',
@@ -234,6 +242,7 @@
 				}
 			};
 
+			// Chart object
 			var chart = new Chart(ctx, config);
 		});
 
@@ -245,13 +254,16 @@
 
 			var gemiddeldMaand = 0;
 
+			// snelheid bij elkaar optellen
 			dataSnelheid.forEach(element => {
 				gemiddeldMaand += element.snelheid;
 				// console.log(element.snelheid);
 			});
 
+			// In HTML zetten
 			document.getElementById("gemiddeldMaand").innerText = Math.round(gemiddeldMaand / 30 * 100) / 100 + " seconden";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.date;
 			});
@@ -259,6 +271,7 @@
 				return e.snelheid;
 			});
 
+			// Canvas 4
 			var ctx = canvas4.getContext('2d');
 			var config = {
 				type: 'line',
@@ -268,6 +281,7 @@
 						label: 'Traplopen gemiddeld',
 						data: dataSnelheid,
 						backgroundColor: 'rgba(0, 119, 204, 0.8)',
+						// Kleur van grafiek veranderen als die onder X waarde komt
 						borderColor: function (context) {
 							var index = context.dataIndex;
 							var value = context.dataset.data[index];
@@ -283,15 +297,6 @@
 		});
 
 	</script>
-
-
-
-
-
-
-
-
-
 
 
 
