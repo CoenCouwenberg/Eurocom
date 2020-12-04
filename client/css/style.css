@@ -82,7 +82,8 @@ body {
   background-color: #ff6968;
 }
 
-.whiteTextMiddle {
+/* Deze class zet text in het midden en maakt het wit, gebruik dit voor kopjes */
+.whiteTextMiddle { 
   color: white;
   display: flex;
   justify-content: center;
@@ -121,7 +122,7 @@ h2{
   box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
 }
 
-.heartIcon {
+.heartIcon { /*Styling voor de hart icon op de homescreen*/
   padding-top: 5vh;
   display: flex;
   justify-content: center;
@@ -157,19 +158,20 @@ h2{
   fill: white;
 }
 
-.dataBlocks {
-  margin-top: 5vh;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
 
-.dataBlock {
+.dataBlock { /*Dit is de styling voor de datablocks in het overzicht*/
   margin: 2vw;
   height: 17vh;
   width: 32vw;
   border-radius: 10px;
   box-shadow: 0 1px 6px 1px rgba(69, 69, 69, 0.149);
+}
+
+.dataBlocks { /*Wanneer je meerdere datablocks gebruikt zet je deze class erbij zodat ze mooi onder elkaar komen en wrappen indien nodig*/
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .blockInfo{
@@ -197,7 +199,7 @@ h2{
 }
 
 
-.dataBlockSquare {
+/* .dataBlockSquare {
   margin: 3vw;
   height: 27vh;
   width: 80vw;
@@ -207,12 +209,13 @@ h2{
   flex-direction: column;
   align-items: center;
   color: white;
-}
+} */
 
 .trendBlock {
   width: 80vw;
   height: 12vh;
 }
+
 
 .dataBlockRed {
   background-color: #ff6968;
@@ -229,7 +232,7 @@ h2{
 
 
 
-.marginTop { /*Dit kun je gebruiken wanneer een element een kleine margin top nodig heeft*/
+.marginTop { /*Dit kun je gebruiken wanneer een element een margin top nodig heeft*/
   margin-top: 5vh;
 }
 .smallMarginTop {
