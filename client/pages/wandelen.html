@@ -100,16 +100,6 @@
 		</nav>
 	</footer>
 
-
-
-
-
-
-
-
-
-
-
 	<!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
 	<script>
@@ -130,6 +120,7 @@
 			// + data[4].aantal
 			// + data[5].aantal;
 
+			// Variabelen declareren 
 			var totaal = 0;
 			var stappenGemiddeld = 0;
 			// var stappenVandaag = 0;
@@ -243,6 +234,7 @@
 
 
 		// WANDELSNELHEID week
+		// De eerste 7 records ophalen vanaf de database via de URL met de limit functie
 		fetch('/api/wandelsnelheid', {
 			headers: {
 				limit: 7,
@@ -251,22 +243,25 @@
 			return result.json();
 		}).then(dataSnelheid => {
 
-
+			// Variabelen declareren 
 			var gemiddeldSnelheid = 0;
 
 			dataSnelheid.forEach(element => {
 				gemiddeldSnelheid += element.snelheid;
 			});
 
+			// Tekst in de HTML wijzigen door de ID te gebruiken
 			document.getElementById("gemiddeldSnelheid").innerText = Math.round(gemiddeldSnelheid / 7 * 100) / 100 + " km/h";
 
+			// X & Y waardes mee geven aan de grafiek
 			var labels = dataSnelheid.map(function (e) {
 				return e.tijd;
 			});
 			var dataSnelheid = dataSnelheid.map(function (e) {
 				return e.snelheid;
-			});;
+			});
 
+			// Canvas maken
 			var ctx = canvas2.getContext('2d');
 			var config = {
 				type: 'line',
@@ -276,6 +271,7 @@
 						label: 'Graph Line',
 						data: dataSnelheid,
 						backgroundColor: 'rgba(0, 119, 204, 0.8)',
+						// Backgorund color die veranderd wanneer het niet helemaal goed gaat
 						borderColor: function (context) {
 							var index = context.dataIndex;
 							var value = context.dataset.data[index];
@@ -287,6 +283,7 @@
 				}
 			};
 
+			// Chart maken
 			var chart = new Chart(ctx, config);
 		});
 
@@ -354,8 +351,10 @@
 			// + data[4].aantal
 			// + data[5].aantal;
 
+			// Variabelen 
 			var totaalMaand = 0;
 			var stappenGemiddeld = 0;
+			// Laatste dag (vandaag) uit de database ophalen
 			stappenVandaag = 0;
 			stappenVandaag = data[29].aantal;
 			console.log("Vandaag: " + data[29].aantal);
@@ -363,6 +362,7 @@
 			// Opslaan voor gebruik op andere pagina's
 			localStorage.setItem("stappenVandaag", stappenVandaag);
 
+			// Tel maand bij maand op zolang er maanden zijn voor het totaal
 			data.forEach(element => {
 				totaalMaand += element.aantal;
 			});
@@ -373,16 +373,18 @@
 			// localStorage.setItem("totaal",totaal);
 
 			// console.log(totaal);
-
+			// Weergeef maand bij de juiste ID
 			document.getElementById("totaalMaand").innerText = totaalMaand;
 
+			// X & Y waardes mee geven aan de grafiek
 			var labels = data.map(function (e) {
 				return e.date;
 			});
 			var data = data.map(function (e) {
 				return e.aantal;
-			});;
+			});
 
+			// Canvas etc
 			var ctx = canvas3.getContext('2d');
 			var config = {
 				type: 'bar',
@@ -402,11 +404,7 @@
 				}
 			};
 
-
-
 			var chart = new Chart(ctx, config);
-
-
 
 		});
 
@@ -416,22 +414,24 @@
 			return result.json();
 		}).then(dataSnelheid => {
 
-
 			var gemiddeldMaand = 0;
 
 			dataSnelheid.forEach(element => {
 				gemiddeldMaand += element.snelheid;
 			});
 
+			// Gemiddelde van de maand berekenen
 			document.getElementById("gemiddeldMaand").innerText = Math.round(gemiddeldMaand / 30 * 100) / 100 + " km/h";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.tijd;
 			});
 			var dataSnelheid = dataSnelheid.map(function (e) {
 				return e.snelheid;
-			});;
+			});
 
+			// Canvas
 			var ctx = canvas4.getContext('2d');
 			var config = {
 				type: 'line',
@@ -455,11 +455,7 @@
 			var chart = new Chart(ctx, config);
 		});
 
-
-
 	</script>
 
-
 </body>
-
 </html>

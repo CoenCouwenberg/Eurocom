@@ -64,16 +64,12 @@
 
 
 
-
-
-
-
-
 	<!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
 	<script>
 		// Grafiek benodigde tijd staan week
 		fetch('/api/staan', {
+			// Limiet van 7 (dagen)
 			headers: {
 				limit: 7,
 			}
@@ -81,23 +77,28 @@
 			return result.json();
 		}).then(data => {
 
+			// Variabelen declareren
 			var totaalStaan = 0;
 
+			// Tel aantal bij elkaar op in totaalStaan
 			data.forEach(element => {
 				totaalStaan += element.aantal;
 			});
 
 			console.log(totaalStaan);
 
+			// Zet totaalStaan in totaalZitten
 			document.getElementById("totaalZitten").innerText = totaalStaan;
 
+			// X & Y
 			var labels = data.map(function (e) {
 				return e.date;
 			});
 			var data = data.map(function (e) {
 				return e.aantal;
-			});;
+			});
 
+			// Canvas vanaf Chartjs
 			var ctx = canvas.getContext('2d');
 			var config = {
 				type: 'bar',
@@ -114,10 +115,9 @@
 			var chart = new Chart(ctx, config);
 		});
 
-
-
 		// gemiddelde tijd staan week (hier moet je de data nog fetchen)
 		fetch('/api/staanSnelheid', {
+			// Limiet van 7 (dagen)
 			headers: {
 				limit: 7,
 			}
@@ -128,12 +128,15 @@
 
 			var totaalSnelheid = 0;
 
+			// snelheid bij elkaar Optellen
 			dataSnelheid.forEach(element => {
 				totaalSnelheid += element.snelheid;
 			});
 
+			// Gemiddelde in HTMl zetten
 			document.getElementById("totaalSnelheid").innerText = Math.round(totaalSnelheid / 7 * 100) / 100 + " seconden";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.date;
 			});
@@ -141,6 +144,7 @@
 				return e.snelheid;
 			});;
 
+			// Canvas ChartJS
 			var ctx = canvas2.getContext('2d');
 			var config = {
 				type: 'line',
@@ -150,7 +154,6 @@
 						label: 'Gemiddeld week',
 						data: dataSnelheid,
 						backgroundColor: 'rgba(0, 119, 204, 0.8)',
-						// Werkt niet?
 						borderColor: function (context) {
 							var index = context.dataIndex;
 							var value = context.dataset.data[index];
@@ -168,15 +171,18 @@
 
 		// Grafiek benodigde tijd staan maand
 		fetch('/api/staan').then(result => {
+			// Geen limiet, dus alle 30 dagen
 			return result.json();
 		}).then(data => {
 
 			var totaal = 0;
 
+			// aantal bij elkaar optellen in totaal
 			data.forEach(element => {
 				totaal += element.aantal;
 			});
 
+			// Stappen van vandaag globaal zetten
 			console.log(totaal);
 			staanVandaag = 0;
 			staanVandaag = data[29].aantal;
@@ -185,15 +191,18 @@
 			// Opslaan voor gebruik op andere pagina's
 			localStorage.setItem("staanVandaag", staanVandaag);
 
+			// TotaalMaand in HTMl zetten
 			document.getElementById("totaalMaand").innerText = totaal;
 
+			// X & Y
 			var labels = data.map(function (e) {
 				return e.date;
 			});
 			var data = data.map(function (e) {
 				return e.aantal;
-			});;
+			});
 
+			// Canvas
 			var ctx = canvas3.getContext('2d');
 			var config = {
 				type: 'bar',
@@ -207,6 +216,7 @@
 				}
 			};
 
+			// Nieuwe Chart maken
 			var chart = new Chart(ctx, config);
 		});
 
@@ -267,20 +277,24 @@
 
 			var gemiddeldSnelheidMaand = 0;
 
+			// snelheid bij elkaar optellen
 			dataSnelheid.forEach(element => {
 				gemiddeldSnelheidMaand += element.snelheid;
 			});
 			console.log(dataSnelheid);
 
+			// gemiddeldSnelheidMaand in HTML zetten
 			document.getElementById("gemiddeldSnelheidMaand").innerText = Math.round(gemiddeldSnelheidMaand / 30 * 100) / 100 + " seconden";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.date;
 			});
 			var dataSnelheid = dataSnelheid.map(function (e) {
 				return e.snelheid;
-			});;
+			});
 
+			// Canvas 4 maken
 			var ctx = canvas4.getContext('2d');
 			var config = {
 				type: 'line',
@@ -303,15 +317,8 @@
 
 			var chart = new Chart(ctx, config);
 		});
+
 	</script>
-
-
-
-
-
-
-
-
 
 
 

@@ -62,18 +62,12 @@
 		</div>
 	</section>
 
-
-
-
-
-
-
-
 	<!-- Hieronder staan de grafieken van wandelen week en wandelen maand -->
 
 	<script>
 		// Grafiek benodigde tijd zitten week
 		fetch('/api/zitten', {
+			// Limiet mee geven in dee header (7 dagen)
 			headers: {
 				limit: 7,
 			}
@@ -83,21 +77,25 @@
 
 			var totaalZitten = 0;
 
+			// Totaal aantal keer zitten in een week bij elkaar optellen zolang er aantal in de data zit
 			data.forEach(element => {
 				totaalZitten += element.aantal;
 			});
 
 			console.log(totaalZitten);
 
+			// totaalZitten in HTML zetten
 			document.getElementById("totaal").innerText = totaalZitten + " keer gaan zitten";
 
+			// X & Y waardes meegeven
 			var labels = data.map(function (e) {
 				return e.tijd;
 			});
 			var data = data.map(function (e) {
 				return e.aantal;
-			});;
+			});
 
+			// Canvast maken
 			var ctx = canvas.getContext('2d');
 			var config = {
 				type: 'bar',
@@ -111,6 +109,7 @@
 				}
 			};
 
+			// Chart object
 			var chart = new Chart(ctx, config);
 		});
 
@@ -162,9 +161,9 @@
 		// var chart = new Chart(ctx, config);
 
 
-
 		// gemiddelde tijd zitten week (hier moet je de data nog fetchen)
 		fetch('/api/zitSnelheid', {
+			// 7 resultaten ophalen (7 dagen)
 			headers: {
 				limit: 7,
 			}
@@ -175,12 +174,15 @@
 
 			var totaalSnelheid = 0;
 
+			// zitsnelheid bij elkaar optellen
 			dataSnelheid.forEach(element => {
 				totaalSnelheid += element.zitSnelheid;
 			});
 
+			// Toevoegen in HTMl
 			document.getElementById("totaalSnelheid").innerText = Math.round(totaalSnelheid / 7 * 100) / 100 + " km / uur";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.date;
 			});
@@ -188,6 +190,7 @@
 				return e.zitSnelheid;
 			});;
 
+			// Canvas
 			var ctx = canvas2.getContext('2d');
 			var config = {
 				type: 'line',
@@ -219,6 +222,7 @@
 
 			var totaal = 0;
 
+			// Totaal maken met een loop
 			data.forEach(element => {
 				totaal += element.aantal;
 			});
@@ -233,13 +237,15 @@
 
 			document.getElementById("totaalMaand").innerText = totaal + " keer gaan zitten";
 
+			// X & Y
 			var labels = data.map(function (e) {
 				return e.tijd;
 			});
 			var data = data.map(function (e) {
 				return e.aantal;
-			});;
+			});
 
+			// Canvas 3 maken
 			var ctx = canvas3.getContext('2d');
 			var config = {
 				type: 'bar',
@@ -253,6 +259,7 @@
 				}
 			};
 
+			// Chart maken
 			var chart = new Chart(ctx, config);
 		});
 
@@ -303,8 +310,6 @@
 
 		// var chart = new Chart(ctx, config);
 
-
-
 		// gemiddelde tijd zitten maand (hier moet je de data nog fetchen)
 		fetch('/api/zitSnelheid').then(result => {
 			return result.json();
@@ -313,12 +318,15 @@
 
 			var totaalSnelheid = 0;
 
+			// zitSnelheid bij elkaar optellen
 			dataSnelheid.forEach(element => {
 				totaalSnelheid += element.zitSnelheid;
 			});
 
+			// totaal toevoegen in HTML
 			document.getElementById("totaalSnelheidMaand").innerText = Math.round(totaalSnelheid / 7 * 100) / 100 + " km / uur";
 
+			// X & Y
 			var labels = dataSnelheid.map(function (e) {
 				return e.date;
 			});
@@ -326,6 +334,7 @@
 				return e.zitSnelheid;
 			});;
 
+			// Canvas
 			var ctx = canvas4.getContext('2d');
 			var config = {
 				type: 'line',
@@ -346,21 +355,11 @@
 				}
 			};
 
+			// Chart maken
 			var chart = new Chart(ctx, config);
 		});
 
 	</script>
-
-
-
-
-
-
-
-
-
-
-
 
 	<!-- Bottom navigation -->
 	<footer>
