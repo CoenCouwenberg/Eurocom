@@ -7,7 +7,7 @@
 	<title>Mobilometer Zitten</title>
 	<link rel="stylesheet" href="../css/style.css">
 	<script src="../js/main.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <body>
@@ -204,8 +204,8 @@
 						borderColor: function (context) {
 							var index = context.dataIndex;
 							var value = context.dataset.data[index];
-							return value > 3.6 ? 'rgba(240,94,35)' :  // draw negative values in red
-								// index % 2 ? 'blue' :    // else, alternate values in blue and green
+							return value < 4.6 ? 'rgba(240,94,35)' :  // draw negative values in red
+								index % 2 ? 'blue' :    // else, alternate values in blue and green
 								'rgba(0, 119, 204)';
 						}
 					}]

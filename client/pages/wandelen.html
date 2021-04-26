@@ -146,7 +146,7 @@
 			});
 			var data = data.map(function (e) {
 				return e.aantal;
-			});;
+			});
 
 			// Canvas maken
 			var ctx = canvas.getContext('2d');
@@ -391,7 +391,7 @@
 				data: {
 					labels: labels,
 					datasets: [{
-						//   label: 'Graph Line',
+						label: 'Stappen Maand',
 						data: data,
 						backgroundColor: function (context) {
 							var index = context.dataIndex;
