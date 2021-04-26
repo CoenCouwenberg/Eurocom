@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
 	// res.send('We are on posts');
 });
 
+// De eerste 7 records terughalen (1 week)
 router.get('/', async (req, res) => {
 	db.collection("testData", function(err, collection){
 		collection.find({}).limit(7).toArray(function(err, data){
